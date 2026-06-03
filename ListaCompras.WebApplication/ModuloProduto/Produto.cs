@@ -1,9 +1,9 @@
-using ListaDeCompras.ConsoleApp.Compartilhado;
-using ListaDeCompras.ConsoleApp.ModuloCategoria;
+using ListaCompras.WebApplication.Compartilhado;
+using ListaCompras.WebApplication.ModuloCategoria;
 
-namespace ListaDeCompras.ConsoleApp.ModuloProduto;
+namespace ListaCompras.WebApplication.ModuloProduto;
 
-public class Produto : EntidadeBase
+public class Produto : EntidadeBase<Produto>
 {
     public string Nome { get; set; }
     public string UnidadeMedida { get; set; }
@@ -43,7 +43,7 @@ public class Produto : EntidadeBase
         return erros;
     }
 
-    public override void AtualizarDados(EntidadeBase entidadeAtualizada)
+    public override void AtualizarDados(Produto entidadeAtualizada)
     {
         Produto produtoAtualizado = (Produto)entidadeAtualizada;
 
@@ -52,4 +52,5 @@ public class Produto : EntidadeBase
         PrecoAproximado = produtoAtualizado.PrecoAproximado;
         Categoria = produtoAtualizado.Categoria;
     }
+
 }

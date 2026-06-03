@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
-using ListaDeCompras.ConsoleApp.ModuloProduto;
+using ListaCompras.WebApplication.ModuloProduto;
 
-namespace ListaDeCompras.ConsoleApp.ModuloListaCompras;
+namespace ListaCompras.WebApplication.ModuloListaCompras;
 
 public class ItemListaCompras
 {

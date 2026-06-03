@@ -1,14 +1,15 @@
-using ListaDeCompras.ConsoleApp.Compartilhado.Arquivos;
+using ListaCompras.WebApplication.Compartilhado.Arquivos;
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 
-namespace ListaDeCompras.ConsoleApp.ModuloListaCompras;
+namespace ListaCompras.WebApplication.ModuloListaCompras;
 
-public class RepositorioListaComprasEmArquivo : RepositorioBaseEmArquivo<ListaCompras>
+public class RepositorioListaComprasEmArquivo : RepositorioBaseEmArquivo<ListaDeCompras>
 {
     public RepositorioListaComprasEmArquivo(ContextoJson contexto) : base(contexto)
     {
     }
 
-    protected override List<ListaCompras> CarregarRegistros()
+    protected override List<ListaDeCompras> CarregarRegistros()
     {
         return contexto.ListaCompras;
     }

@@ -1,4 +1,4 @@
-namespace ListaDeCompras.ConsoleApp.ModuloListaCompras;
+namespace ListaCompras.WebApplication.ModuloListaCompras;
 
 public enum StatusListaCompras
 {

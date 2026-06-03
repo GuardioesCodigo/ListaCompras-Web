@@ -1,4 +1,4 @@
-namespace ListaDeCompras.ConsoleApp.ModuloCategoria;
+namespace ListaCompras.WebApplication.ModuloCategoria;
 
 public enum CorCategoria
 {

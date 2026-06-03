@@ -1,6 +1,8 @@
-namespace ListaDeCompras.ConsoleApp.Compartilhado.Arquivos;
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 
-public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase
+namespace ListaCompras.WebApplication.Compartilhado.Arquivos;
+
+public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase<T>
 {
     protected ContextoJson contexto;
     protected List<T> registros;
@@ -69,5 +71,18 @@ public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase
     public List<T> SelecionarTodos()
     {
         return registros;
+    }
+
+    public List<T> Filtrar(Predicate<T> filtro)
+    {
+        List<T> registrosFiltrados = new List<T>();
+
+        foreach (T e in registros)
+        {
+            if (filtro(e))
+                registrosFiltrados.Add(e);
+        }
+
+        return registrosFiltrados;
     }
 }

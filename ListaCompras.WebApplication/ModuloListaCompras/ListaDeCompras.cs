@@ -1,9 +1,10 @@
-using ListaDeCompras.ConsoleApp.Compartilhado;
-using ListaDeCompras.ConsoleApp.ModuloProduto;
+using ListaCompras.WebApplication.Compartilhado;
+using ListaCompras.WebApplication.ModuloListaCompras;
+using ListaCompras.WebApplication.ModuloProduto;
 
-namespace ListaDeCompras.ConsoleApp.ModuloListaCompras;
+namespace ListaCompras.WebApplication.ModuloListaCompras;
 
-public class ListaCompras : EntidadeBase
+public class ListaDeCompras : EntidadeBase<ListaDeCompras>
 {
     public string Nome { get; set; }
     public DateTime DataCriacao { get; set; }
@@ -22,11 +23,11 @@ public class ListaCompras : EntidadeBase
         }
     }
 
-    public ListaCompras()
+    public ListaDeCompras()
     {
     }
 
-    public ListaCompras(string nome)
+    public ListaDeCompras(string nome)
     {
         Nome = nome;
         DataCriacao = DateTime.Now;
@@ -75,9 +76,9 @@ public class ListaCompras : EntidadeBase
         return erros;
     }
 
-    public override void AtualizarDados(EntidadeBase entidadeAtualizada)
+    public override void AtualizarDados(ListaDeCompras entidadeAtualizada)
     {
-        ListaCompras listaAtualizada = (ListaCompras)entidadeAtualizada;
+        ListaDeCompras listaAtualizada = (ListaDeCompras)entidadeAtualizada;
 
         Nome = listaAtualizada.Nome;
     }

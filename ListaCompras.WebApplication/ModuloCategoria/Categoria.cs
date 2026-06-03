@@ -1,8 +1,8 @@
-using ListaDeCompras.ConsoleApp.Compartilhado;
+using ListaCompras.WebApplication.Compartilhado;
 
-namespace ListaDeCompras.ConsoleApp.ModuloCategoria;
+namespace ListaCompras.WebApplication.ModuloCategoria;
 
-public class Categoria : EntidadeBase
+public class Categoria : EntidadeBase<Categoria>
 {
     public string Nome { get; set; }
     public CorCategoria Cor { get; set; }
@@ -30,7 +30,7 @@ public class Categoria : EntidadeBase
         return erros;
     }
 
-    public override void AtualizarDados(EntidadeBase entidadeAtualizada)
+    public override void AtualizarDados(Categoria entidadeAtualizada)
     {
         Categoria categoriaAtualizada = (Categoria)entidadeAtualizada;
 

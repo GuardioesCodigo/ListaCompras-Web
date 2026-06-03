@@ -1,7 +1,7 @@
-using System;
-using ListaDeCompras.ConsoleApp.Compartilhado.Arquivos;
+using ListaCompras.WebApplication.Compartilhado.Arquivos;
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 
-namespace ListaDeCompras.ConsoleApp.ModuloProduto;
+namespace ListaCompras.WebApplication.ModuloProduto;
 
 public class RepositorioProdutoEmArquivo : RepositorioBaseEmArquivo<Produto>
 {
