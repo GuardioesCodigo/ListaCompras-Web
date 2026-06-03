@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "O5mx+itXd0w=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\yuajs\\Desktop\\ListaComprasWeb\\ListaCompras.WebApplication\\ListaCompras.WebApplication.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yuajs\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",
+    "C:\\Users\\yuajs\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
