@@ -83,24 +83,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yuajs\\.nuget\\packages\\": {}
+    "C:\\Users\\Cliente\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yuajs\\Desktop\\ListaComprasWeb\\ListaCompras.WebApplication\\ListaCompras.WebApplication.csproj",
+      "projectUniqueName": "C:\\Users\\Cliente\\Desktop\\AcademiaProgramador\\MODULO3\\ListaCompras-Web\\ListaCompras.WebApplication\\ListaCompras.WebApplication.csproj",
       "projectName": "ListaCompras.WebApplication",
-      "projectPath": "C:\\Users\\yuajs\\Desktop\\ListaComprasWeb\\ListaCompras.WebApplication\\ListaCompras.WebApplication.csproj",
-      "packagesPath": "C:\\Users\\yuajs\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yuajs\\Desktop\\ListaComprasWeb\\ListaCompras.WebApplication\\obj\\",
+      "projectPath": "C:\\Users\\Cliente\\Desktop\\AcademiaProgramador\\MODULO3\\ListaCompras-Web\\ListaCompras.WebApplication\\ListaCompras.WebApplication.csproj",
+      "packagesPath": "C:\\Users\\Cliente\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Cliente\\Desktop\\AcademiaProgramador\\MODULO3\\ListaCompras-Web\\ListaCompras.WebApplication\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\yuajs\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Cliente\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
