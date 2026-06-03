@@ -1,6 +1,6 @@
 using ListaCompras.WebApplication.Compartilhado;
 
-namespace ListaCompras.WebApplication.ModuloCategoria;
+namespace ListaCompras.WebApplication.ModuloCategoria.Dominio;
 
 public class Categoria : EntidadeBase<Categoria>
 {
@@ -21,11 +21,17 @@ public class Categoria : EntidadeBase<Categoria>
     {
         List<string> erros = new List<string>();
 
-        if (Nome.Length < 2 || Nome.Length > 50)
+        if (string.IsNullOrWhiteSpace(Nome))
+            erros.Add("O campo \"Nome\" deve ser preenchido.");
+            
+        else if (Nome.Length < 2 || Nome.Length > 50)
             erros.Add("O campo \"Nome\" deve conter entre 2 e 50 caracteres.");
 
-        else if (!Enum.IsDefined<CorCategoria>(Cor))
-            erros.Add("O campo \"Cor\" deve conter uma seleção permitida (Branco, Vermelho, Verde, ou Azul).");
+        if (Cor == CorCategoria.Nenhuma)
+            erros.Add("O campo \"Cor\" deve ser selecionado.");
+
+        else if (!Enum.IsDefined(Cor))
+            erros.Add("O valor informado para \"Cor\" é inválido.");
 
         return erros;
     }

@@ -1,8 +1,8 @@
 using ListaCompras.WebApplication.Compartilhado.Arquivos;
 using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
-using ListaCompras.WebApplication.ModuloCategoria;
+using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 
-namespace ListaCompras.ConsoleApp.ModuloCategoria;
+namespace ListaCompras.ConsoleApp.ModuloCategoria.Infra;
 
 public class RepositorioCategoriaEmArquivo : RepositorioBaseEmArquivo<Categoria>
 {
