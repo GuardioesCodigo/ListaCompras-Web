@@ -15,6 +15,10 @@ public class ServicoProduto
 
     public Result Cadastrar(CadastrarProdutoDto dto)
     {
+
+        if (ExisteProdutoComNome(dto.Nome))
+            return Falha("Nome", "Já existe um produto dentro desta categoria com este nome.");
+
         Produto novoProduto = new Produto(
             dto.Nome,
             dto.UnidadeMedida,
@@ -46,5 +50,25 @@ public class ServicoProduto
         return Result.Ok(
             new DetalhesProdutoDto(produtos.Id, produtos.Nome, produtos.Categoria, produtos.UnidadeMedida, produtos.PrecoAproximado)
         );
+    }
+
+    public bool ExisteProdutoComNome(string nome, string? idIgnorado = null)
+    {
+        List<Produto> produtos = repositorioProduto.SelecionarTodos();
+
+        foreach (Produto p in produtos)
+        {
+            if (p.Id != idIgnorado && string.Equals(p.Nome, nome, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static Result Falha(string campo, string mensagem)
+    {
+        IError erro = new Error(mensagem).WithMetadata("Campo", campo);
+
+        return Result.Fail(erro);
     }
 }

@@ -19,6 +19,8 @@ public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) 
     [HttpGet]
     public ActionResult Cadastrar()
     {
+
+        
         CadastrarProdutoViewModel cadastrarVm = new CadastrarProdutoViewModel(
             string.Empty,
             null,
@@ -38,6 +40,13 @@ public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) 
         CadastrarProdutoDto dto = mapeador.Map<CadastrarProdutoDto>(cadastrarVm);
 
         Result resultado = servicoProduto.Cadastrar(dto);
+
+        if (resultado.IsFailed) 
+        { 
+            ModelState.AddModelError(resultado); 
+            
+            return View(cadastrarVm); 
+        }
 
         return RedirectToAction(nameof(Listar));
     }
