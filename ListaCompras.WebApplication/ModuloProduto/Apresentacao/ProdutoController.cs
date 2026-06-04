@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentResults;
+using ListaCompras.WebApplication.Compartilhado.Apresentacao.Extensions;
 using ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,11 +42,11 @@ public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) 
 
         Result resultado = servicoProduto.Cadastrar(dto);
 
-        if (resultado.IsFailed) 
-        { 
-            ModelState.AddModelError(resultado); 
-            
-            return View(cadastrarVm); 
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            return View(cadastrarVm);
         }
 
         return RedirectToAction(nameof(Listar));
