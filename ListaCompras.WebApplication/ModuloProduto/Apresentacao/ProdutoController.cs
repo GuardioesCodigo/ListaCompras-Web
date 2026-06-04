@@ -1,15 +1,18 @@
-using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
+using AutoMapper;
+using ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ListaCompras.WebApplication.ModuloProduto.Apresentacao
+namespace ListaCompras.WebApplication.ModuloProduto.Apresentacao;
+public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) : Controller
 {
-    public class ProdutoController : Controller
+    [HttpGet]
+    public ActionResult Listar()
     {
-        [HttpGet]
-        public ActionResult Listar()
-        {
-            return View();
-        }
+        List<ListarProdutoDto> dtos = servicoProduto.SelecionarTodos();
 
+        List<ListarProdutosViewModel> listarVms = mapeador.Map<List<ListarProdutosViewModel>>(dtos);
+
+        return View(listarVms);
     }
+
 }
