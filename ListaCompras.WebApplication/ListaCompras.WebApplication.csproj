@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Compartilhado\Apresentacao\Views\" />
     <Folder Include="ModuloCategoria\Apresentacao\" />
     <Folder Include="ModuloCategoria\Apresentacao\Views\" />
   </ItemGroup>

@@ -1,49 +1,22 @@
-﻿using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
-using ListaCompras.WebApp.Compartilhado.Aplicacao;
-using ListaCompras.WebApplication.Compartilhado.Dominio;
-using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
-using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
-using ListaCompras.WebApplication.ModuloCategoria.Dominio;
-using ListaCompras.WebApplication.ModuloProduto;
+﻿using ListaCompras.WebApp.Compartilhado.Aplicacao;
+using ListaCompras.WebApplication.Compartilhado;
+using ListaCompras.WebApplication.Compartilhado.Infra;
 
-// APS .NET core
-// Montar um  servidor web
+var builder = WebApplication.CreateBuilder(args);
 
-// Builder de um servidor web
-
-WebApplicationBuilder builder =  WebApplication.CreateBuilder(args);
-
-// Configuração de Serviços
-builder.Services.AddScoped(provider =>
-{
-    ContextoJson contextoJson = new ContextoJson();
-    contextoJson.Carregar();
-    return contextoJson;
-});
-
-builder.Services.AddControllersWithViews().AddRazorOptions(options =>
-{
-    
-    options.ViewLocationFormats.Clear();
-
-    options.ViewLocationFormats.Add("/Modulo{1}/Apresentacao/Views/{0}.cshtml");
-
-    // Views compartilhadas: /Compartilhado/Apresentacao/Views/_Layout.cshtml
-    options.ViewLocationFormats.Add("/Compartilhado/Apresentacao/Views/{0}.cshtml");
-});
+builder.Services.AddInfraRepositories();
 
 builder.Services.AddAplicationServices();
 
-// MVC tipo de aplicação web, como vamos apresentar as informações para o usuário
-builder.Services.AddControllersWithViews();
+builder.Services.AddPresentation();
 
-// Criação da instância do servidor web
-WebApplication app = builder.Build();
+var app = builder.Build();
 
-// Middlewares - funções que executam em cada chamada que o nosso servidor vai receber
+// Configuração de Middlewares
 app.UseStaticFiles();
+
 app.UseRouting();
 app.MapDefaultControllerRoute();
 
-// Inicia o loop da aplicação
+// Execução do Servidor
 app.Run();

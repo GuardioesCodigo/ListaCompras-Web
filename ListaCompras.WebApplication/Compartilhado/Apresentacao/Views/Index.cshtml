@@ -2,3 +2,20 @@
     Layout = "_Layout";
     ViewBag.Titulo = "Página Inicial";
 }
+
+<div class="row g-2">
+    <div class="col-lg-7">
+        <h1 class="display-5 fw-semibold mb-3">Lista de Compras</h1>
+        <p class="lead text-secondary mb-4">
+            Lista de compras do mês
+        </p>
+
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary rounded-pill px-4" asp-controller="Categoria" asp-action="Listar">Listar</a>
+            <a class="btn btn-primary rounded-pill px-4" asp-controller="Categoria" asp-action="Cadastrar">Cadastrar</a>
+            <a class="btn btn-primary rounded-pill px-4" asp-controller="Categoria" asp-action="Editar">Editar</a>
+            <a class="btn btn-primary rounded-pill px-4" asp-controller="Categoria" asp-action="Excluir">Excluir</a>
+
+        </div>
+    </div>
+</div>
