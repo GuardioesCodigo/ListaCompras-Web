@@ -3,6 +3,7 @@ using ListaCompras.WebApplication.Compartilhado.Dominio;
 using ListaCompras.WebApplication.ModuloCategoria.Apresentacao;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using ListaCompras.WebApplication.ModuloProduto;
+using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
 
