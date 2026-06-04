@@ -1,14 +1,14 @@
 using ListaCompras.WebApplication.Compartilhado;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 
-namespace ListaCompras.WebApplication.ModuloProduto;
+namespace ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 public class Produto : EntidadeBase<Produto>
 {
-    public string Nome { get; set; }
-    public string UnidadeMedida { get; set; }
-    public decimal PrecoAproximado { get; set; }
-    public Categoria Categoria { get; set; }
+    public string Nome { get; set; } = string.Empty;
+    public string UnidadeMedida { get; set; } = string.Empty;
+    public decimal PrecoAproximado { get; set; } = 0m;
+    public Categoria Categoria { get; set; } = null!;
 
     public Produto()
     {
