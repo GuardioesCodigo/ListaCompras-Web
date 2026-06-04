@@ -9,6 +9,14 @@ public class CategoriaController: Controller
 {
     private readonly IRepositorioCategoria repositorioCategoria;
 
+    public CategoriaController()
+    {
+        ContextoJson contexto = new ContextoJson();
+        contexto.Carregar();
+
+        repositorioCategoria = new RepositorioCategoriaEmArquivo(contexto);
+    }
+
     [HttpGet]
     public ActionResult Listar()
     {

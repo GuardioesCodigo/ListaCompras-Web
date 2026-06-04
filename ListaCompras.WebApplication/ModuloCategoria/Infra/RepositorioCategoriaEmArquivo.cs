@@ -4,7 +4,7 @@ using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 
 namespace ListaCompras.ConsoleApp.ModuloCategoria.Infra;
 
-public class RepositorioCategoriaEmArquivo : RepositorioBaseEmArquivo<Categoria>
+public class RepositorioCategoriaEmArquivo : RepositorioBaseEmArquivo<Categoria>, IRepositorioCategoria
 {
     public RepositorioCategoriaEmArquivo(ContextoJson contexto) : base(contexto)
     {

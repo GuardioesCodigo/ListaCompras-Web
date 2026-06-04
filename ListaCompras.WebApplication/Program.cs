@@ -1,41 +1,46 @@
-var builder = WebApplication.CreateBuilder(args);
+﻿// APS .NET core
+// Montar um  servidor web
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Builder de um servidor web
+using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
+using ListaCompras.WebApp.Compartilhado.Aplicacao;
+using ListaCompras.WebApplication.Compartilhado.Arquivos;
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
+using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 
-var app = builder.Build();
+WebApplicationBuilder builder =  WebApplication.CreateBuilder(args);
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Configuração de Serviços
+builder.Services.AddScoped(provider =>
 {
-    app.MapOpenApi();
-}
+    ContextoJson contextoJson = new ContextoJson();
+    contextoJson.Carregar();
+    return contextoJson;
+});
 
-app.UseHttpsRedirection();
+builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmArquivo>();
 
-var summaries = new[]
+builder.Services.AddControllersWithViews().AddRazorOptions(options =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    
+    options.ViewLocationFormats.Clear();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    options.ViewLocationFormats.Add("/Modulo{1}/Apresentacao/Views/{0}.cshtml");
 
+    // Views compartilhadas: /Compartilhado/Apresentacao/Views/_Layout.cshtml
+    options.ViewLocationFormats.Add("/Compartilhado/Apresentacao/Views/{0}.cshtml");
+});
+
+// MVC tipo de aplicação web, como vamos apresentar as informações para o usuário
+builder.Services.AddControllersWithViews();
+
+// Criação da instância do servidor web
+WebApplication app = builder.Build();
+
+// Middlewares - funções que executam em cada chamada que o nosso servidor vai receber
+app.UseStaticFiles();
+app.UseRouting();
+app.MapDefaultControllerRoute();
+
+// Inicia o loop da aplicação
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
