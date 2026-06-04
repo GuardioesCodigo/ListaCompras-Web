@@ -90,4 +90,34 @@ public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) 
             
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Excluir(string id)
+    {
+        Result<DetalhesProdutoDto> resultado = servicoProduto.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        DetalhesProdutoDto dto = resultado.Value;
+
+        ExcluirProdutosViewModel excluirVm =  mapeador.Map<ExcluirProdutosViewModel>(dto);
+
+        return View(excluirVm);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirProdutosViewModel excluirVm)
+    {
+        Result resultado = servicoProduto.Excluir(excluirVm.Id);
+
+        if (resultado.IsFailed)
+            TempData.AddErrorMessage(resultado);
+
+        return RedirectToAction(nameof(Listar));
+    }
 }

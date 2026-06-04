@@ -51,6 +51,18 @@ public class ServicoProduto
         return Result.Ok();
     }
 
+    public Result Excluir(string id)
+    {
+        Produto? produto = repositorioProduto.SelecionarPorId(id);
+
+        if (produto == null)
+            return Result.Fail("Produto não encontrado");
+
+        repositorioProduto.Excluir(id);
+
+        return Result.Ok();
+    }
+
     public List<ListarProdutoDto> SelecionarTodos()
     {
         List<Produto> produtos = repositorioProduto.SelecionarTodos();
@@ -67,9 +79,13 @@ public class ServicoProduto
         if (produtos == null)
             return Result.Fail("Produto não encontrada.");
 
-        return Result.Ok(
-            new DetalhesProdutoDto(produtos.Id, produtos.Nome, produtos.Categoria, produtos.UnidadeMedida, produtos.PrecoAproximado)
-        );
+        return Result.Ok( new DetalhesProdutoDto(
+            produtos.Id, 
+            produtos.Nome, 
+            produtos.Categoria, 
+            produtos.UnidadeMedida, 
+            produtos.PrecoAproximado
+        ));
     }
 
     public bool ExisteProdutoComNome(string nome, string? idIgnorado = null)

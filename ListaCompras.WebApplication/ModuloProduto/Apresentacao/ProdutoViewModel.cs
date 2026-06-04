@@ -46,3 +46,11 @@ public record EditarProdutoViewModel(
     [Range(0.01, double.MaxValue, ErrorMessage = "O campo \"Preço aproximado\" deve ser maior que 0.")]
     decimal PrecoAproximado
 );
+
+public record ExcluirProdutosViewModel(
+    string Id,
+    string Nome,
+    Categoria Categoria,
+    string UnidadeMedida,
+    decimal PrecoAproximado    
+);
