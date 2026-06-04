@@ -11,6 +11,13 @@ public record ListarProdutoDto(
     decimal PrecoAproximado
 );
 
+public record CadastrarProdutoDto(   
+    string Nome,
+    Categoria Categoria,
+    string UnidadeMedida,
+    decimal PrecoAproximado
+);
+
 public record DetalhesProdutoDto(
     string Id,
     string Nome,

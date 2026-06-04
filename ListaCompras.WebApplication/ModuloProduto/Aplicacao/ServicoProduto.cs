@@ -13,6 +13,20 @@ public class ServicoProduto
         this.repositorioProduto = repositorioProduto;
     }
 
+    public Result Cadastrar(CadastrarProdutoDto dto)
+    {
+        Produto novoProduto = new Produto(
+            dto.Nome,
+            dto.UnidadeMedida,
+            dto.PrecoAproximado,
+            dto.Categoria
+        );
+
+        repositorioProduto.Cadastrar(novoProduto);
+
+        return Result.Ok();
+    }
+
     public List<ListarProdutoDto> SelecionarTodos()
     {
         List<Produto> produtos = repositorioProduto.SelecionarTodos();
