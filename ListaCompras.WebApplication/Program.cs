@@ -1,12 +1,13 @@
-﻿// APS .NET core
+﻿using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
+using ListaCompras.WebApplication.Compartilhado.Dominio;
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
+using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
+using ListaCompras.WebApplication.ModuloCategoria.Dominio;
+
+// APS .NET core
 // Montar um  servidor web
 
 // Builder de um servidor web
-using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
-using ListaCompras.WebApp.Compartilhado.Aplicacao;
-using ListaCompras.WebApplication.Compartilhado.Arquivos;
-using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
-using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 
 WebApplicationBuilder builder =  WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,8 @@ builder.Services.AddScoped(provider =>
     return contextoJson;
 });
 
-builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoriaEmArquivo>();
+builder.Services.AddScoped<IRepositorio<Categoria>, RepositorioCategoriaEmArquivo>();
+builder.Services.AddScoped<ServicoCategoria>();
 
 builder.Services.AddControllersWithViews().AddRazorOptions(options =>
 {
