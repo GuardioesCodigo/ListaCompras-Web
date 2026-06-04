@@ -1,14 +1,15 @@
 using System;
 using FluentResults;
+using ListaCompras.WebApplication.Compartilhado.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 
 public class ServicoProduto
 {
-    private readonly IRepositorioProduto repositorioProduto;
+    private readonly IRepositorio<Produto> repositorioProduto;
 
-    public ServicoProduto(IRepositorioProduto repositorioProduto)
+    public ServicoProduto(IRepositorio<Produto> repositorioProduto)
     {
         this.repositorioProduto = repositorioProduto;
     }

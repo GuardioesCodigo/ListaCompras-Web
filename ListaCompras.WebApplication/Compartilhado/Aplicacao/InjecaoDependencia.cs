@@ -2,6 +2,7 @@ using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
 using ListaCompras.WebApplication.Compartilhado.Dominio;
 using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
+using ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Infra;
 
@@ -11,9 +12,10 @@ public static class InjecaoDependencia
 {
     public static void AddAplicationServices(this IServiceCollection services)
     {
-    services.AddScoped<ServicoCategoria>();
+        services.AddScoped<ServicoCategoria>();
+        services.AddScoped<ServicoProduto>();
 
-    services.AddScoped<IRepositorio<Categoria>, RepositorioCategoriaEmArquivo>();
-    services.AddScoped<IRepositorio<Produto>, RepositorioProdutoEmArquivo>();
+        services.AddScoped<IRepositorio<Categoria>, RepositorioCategoriaEmArquivo>();
+        services.AddScoped<IRepositorio<Produto>, RepositorioProdutoEmArquivo>();
     }
 }
