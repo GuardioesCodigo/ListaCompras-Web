@@ -1,5 +1,5 @@
 using ListaCompras.WebApplication.Compartilhado;
-using ListaCompras.WebApplication.ModuloCategoria;
+using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloProduto;
 

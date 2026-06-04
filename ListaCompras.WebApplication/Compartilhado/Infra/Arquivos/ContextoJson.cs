@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ListaCompras.WebApplication.ModuloCategoria;
+using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using ListaCompras.WebApplication.ModuloListaCompras;
 using ListaCompras.WebApplication.ModuloProduto;
 
