@@ -1,6 +1,7 @@
 using ListaCompras.WebApplication.Compartilhado;
 using ListaCompras.WebApplication.ModuloListaCompras;
 using ListaCompras.WebApplication.ModuloProduto;
+using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloListaCompras;
 

@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using ListaCompras.WebApplication.ModuloListaCompras;
 using ListaCompras.WebApplication.ModuloProduto;
+using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 

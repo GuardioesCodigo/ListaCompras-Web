@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using ListaCompras.WebApplication.ModuloProduto;
+using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloListaCompras;
 
