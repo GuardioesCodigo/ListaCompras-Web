@@ -29,3 +29,9 @@ public record EditarCategoriasViewModel(
     [Range(1, int.MaxValue, ErrorMessage = "O campo \"Cor\" deve ser selecionado.")]
     CorCategoria Cor
 );
+
+public record ExcluirCategoriasViewModel(
+    string Id,
+    string Nome,
+    CorCategoria Cor
+);

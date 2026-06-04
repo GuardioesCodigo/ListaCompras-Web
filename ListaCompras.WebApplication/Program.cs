@@ -1,8 +1,10 @@
 ﻿using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
+using ListaCompras.WebApp.Compartilhado.Aplicacao;
 using ListaCompras.WebApplication.Compartilhado.Dominio;
 using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
+using ListaCompras.WebApplication.ModuloProduto;
 
 // APS .NET core
 // Montar um  servidor web
@@ -19,9 +21,6 @@ builder.Services.AddScoped(provider =>
     return contextoJson;
 });
 
-builder.Services.AddScoped<IRepositorio<Categoria>, RepositorioCategoriaEmArquivo>();
-builder.Services.AddScoped<ServicoCategoria>();
-
 builder.Services.AddControllersWithViews().AddRazorOptions(options =>
 {
     
@@ -32,6 +31,8 @@ builder.Services.AddControllersWithViews().AddRazorOptions(options =>
     // Views compartilhadas: /Compartilhado/Apresentacao/Views/_Layout.cshtml
     options.ViewLocationFormats.Add("/Compartilhado/Apresentacao/Views/{0}.cshtml");
 });
+
+builder.Services.AddAplicationServices();
 
 // MVC tipo de aplicação web, como vamos apresentar as informações para o usuário
 builder.Services.AddControllersWithViews();

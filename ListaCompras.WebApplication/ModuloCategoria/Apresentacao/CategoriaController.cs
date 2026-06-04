@@ -120,4 +120,38 @@ public class CategoriaController: Controller
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Excluir(string id)
+    {
+        Result<DetalhesCategoriaDto> resultado = servicoCategoria.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData["MensagemErro"] = resultado.Errors.First().Message;
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        DetalhesCategoriaDto dto = resultado.Value;
+
+        ExcluirCategoriasViewModel excluirVm = new ExcluirCategoriasViewModel(
+            id,
+            dto.Nome,
+            dto.Cor
+        );
+
+        return View(excluirVm);
+    }
+
+    [HttpPost]
+    public ActionResult Excluir(ExcluirCategoriasViewModel excluirVm)
+    {
+        Result resultado = servicoCategoria.Excluir(excluirVm.Id);
+
+        if (resultado.IsFailed)
+            TempData["MensagemErro"] = resultado.Errors.First().Message;
+
+        return RedirectToAction(nameof(Listar));
+    }
 }
