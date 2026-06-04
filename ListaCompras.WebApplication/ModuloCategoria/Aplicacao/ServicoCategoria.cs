@@ -7,29 +7,83 @@ namespace ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
 
 public class ServicoCategoria
 {
-    private readonly IRepositorio<Categoria> repositorio;
+    private readonly IRepositorio<Categoria> repositorioCategoria;
 
     public ServicoCategoria(IRepositorio<Categoria> repositorio)
     {
-        this.repositorio = repositorio;
+        this.repositorioCategoria = repositorio;
     }
 
-    public Result Cadastrar(CadastrarCategoriasViewModel vm)
+    public Result Cadastrar(CadastrarCategoriaDto dto)
     {
-    var existe = repositorio
-        .Filtrar(c => c.Nome == vm.Nome)
-        .Any();
+        if (ExisteCategoriaComNome(dto.Nome))
+            return Falha("Nome", "Já existe uma categoria com este nome.");
 
-    if (existe)
-    {
-        return Result.Fail(new Error("Já existe uma categoria com esse nome")
-            .WithMetadata("Campo", "Nome"));
+        Categoria novaCategoria = new Categoria(
+            dto.Nome,
+            dto.Cor
+        );
+
+        repositorioCategoria.Cadastrar(novaCategoria);
+
+        return Result.Ok();
     }
 
-    var categoria = new Categoria(vm.Nome, vm.Cor);
+    public Result Editar(EditarCategoriaDto dto)
+    {
+        if (ExisteCategoriaComNome(dto.Nome, dto.Id))
+            return Falha("Nome", "Já existe uma categoria com este nome.");
 
-    repositorio.Cadastrar(categoria);
+        Categoria? categoria = repositorioCategoria.SelecionarPorId(dto.Id);
 
-    return Result.Ok();
+        if (categoria == null)
+            return Result.Fail("Categoria não encontrada.");
+
+        Categoria categoriaAtualizada = new Categoria(dto.Nome, dto.Cor);
+
+        bool conseguiuEditar = repositorioCategoria.Editar(dto.Id, categoriaAtualizada);
+
+        return Result.Ok();
+    }
+
+    public List<ListarCategoriaDto> SelecionarTodos()
+    {
+        List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
+
+        return categorias
+            .Select(c => new ListarCategoriaDto(c.Id, c.Nome, c.Cor))
+            .ToList();
+    }
+
+    public Result<DetalhesCategoriaDto> SelecionarPorId(string id)
+    {
+        Categoria? categoria = repositorioCategoria.SelecionarPorId(id);
+
+        if (categoria == null)
+            return Result.Fail("Categoria não encontrada.");
+
+        return Result.Ok(
+            new DetalhesCategoriaDto(categoria.Id, categoria.Nome, categoria.Cor)
+        );
+    }
+
+    private bool ExisteCategoriaComNome(string nome, string? idIgnorado = null)
+    {
+        List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
+
+        foreach (Categoria c in categorias)
+        {
+            if (c.Id != idIgnorado && string.Equals(c.Nome, nome, StringComparison.OrdinalIgnoreCase))
+                return true;            
+        }
+
+        return false;
+    }
+
+    private static Result Falha(string campo, string mensagem)
+    {
+        IError erro = new Error(mensagem).WithMetadata("Campo", campo);
+
+        return Result.Fail(erro);
     }
 }

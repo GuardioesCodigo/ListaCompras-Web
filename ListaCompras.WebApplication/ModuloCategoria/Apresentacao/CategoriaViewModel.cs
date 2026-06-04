@@ -18,3 +18,14 @@ public record CadastrarCategoriasViewModel(
     [Range(1, int.MaxValue, ErrorMessage = "O campo \"Cor\" deve ser selecionado.")]
     CorCategoria Cor
 );
+
+public record EditarCategoriasViewModel(
+    string Id,
+
+    [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
+    [StringLength(50, ErrorMessage = "O campo \"Nome\" deve conter no máximo 50 caracteres.")]
+    string Nome,
+
+    [Range(1, int.MaxValue, ErrorMessage = "O campo \"Cor\" deve ser selecionado.")]
+    CorCategoria Cor
+);

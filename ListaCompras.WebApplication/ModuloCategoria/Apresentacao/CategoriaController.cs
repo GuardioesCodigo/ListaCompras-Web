@@ -9,35 +9,21 @@ namespace ListaCompras.WebApplication.ModuloCategoria.Apresentacao;
 
 public class CategoriaController: Controller
 {
-    private readonly IRepositorioCategoria repositorioCategoria;
     private readonly ServicoCategoria servicoCategoria;
 
     public CategoriaController(ServicoCategoria servicoCategoria)
     {
-        ContextoJson contexto = new ContextoJson();
-        contexto.Carregar();
-
-        repositorioCategoria = new RepositorioCategoriaEmArquivo(contexto);
         this.servicoCategoria = servicoCategoria;
     }
 
     [HttpGet]
     public ActionResult Listar()
     {
-        List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
+        List<ListarCategoriaDto> dtos = servicoCategoria.SelecionarTodos();
 
-        List<ListarCategoriasViewModel> listarVms = new List<ListarCategoriasViewModel>();
-
-        foreach (Categoria c in categorias)
-        {
-            ListarCategoriasViewModel viewModel = new ListarCategoriasViewModel(
-                c.Id,
-                c.Nome,
-                c.Cor
-            );
-
-            listarVms.Add(viewModel);
-        }
+        List<ListarCategoriasViewModel> listarVms = dtos
+            .Select(c => new ListarCategoriasViewModel(c.Id, c.Nome, c.Cor))
+            .ToList();
 
         return View(listarVms);
     }
@@ -59,7 +45,12 @@ public class CategoriaController: Controller
         if (!ModelState.IsValid)
             return View(cadastrarVm);
 
-        Result resultado = servicoCategoria.Cadastrar(cadastrarVm);
+        CadastrarCategoriaDto dto = new CadastrarCategoriaDto(
+            cadastrarVm.Nome,
+            cadastrarVm.Cor
+        );
+
+        Result resultado = servicoCategoria.Cadastrar(dto);
 
         if (resultado.IsFailed)
         {
@@ -74,6 +65,57 @@ public class CategoriaController: Controller
             }
 
             return View(cadastrarVm);
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
+
+    [HttpGet]
+    public ActionResult Editar(string id)
+    {
+        Result<DetalhesCategoriaDto> resultado = servicoCategoria.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData["MensagemErro"] = resultado.Errors.First().Message;
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        DetalhesCategoriaDto categoria = resultado.Value;
+
+        EditarCategoriasViewModel editarVm = new EditarCategoriasViewModel(
+            id,
+            categoria.Nome,
+            categoria.Cor
+        );
+
+        return View(editarVm);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(EditarCategoriasViewModel editarVm)
+    {
+        if (!ModelState.IsValid)
+            return View(editarVm);
+
+        Result resultado = servicoCategoria.Editar(new EditarCategoriaDto(
+            editarVm.Id,
+            editarVm.Nome,
+            editarVm.Cor
+        ));
+
+        if (resultado.IsFailed)
+        {
+            foreach (IError erro in resultado.Errors)
+            {
+                string campo =
+                    erro.Metadata["Campo"] is string ? erro.Metadata["Campo"].ToString()! : string.Empty;
+
+                ModelState.AddModelError(campo, erro.Message);
+            }
+
+            return View(editarVm);
         }
 
         return RedirectToAction(nameof(Listar));
