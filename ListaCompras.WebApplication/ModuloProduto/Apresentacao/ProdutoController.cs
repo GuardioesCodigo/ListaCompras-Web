@@ -51,4 +51,43 @@ public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) 
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Editar(string id)
+    {
+        Result<DetalhesProdutoDto> resultado = servicoProduto.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        DetalhesProdutoDto dto =  resultado.Value;
+
+        EditarProdutoViewModel editarVm = mapeador.Map<EditarProdutoViewModel>(dto);
+
+        return View(editarVm);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(EditarProdutoViewModel editarVm)
+    {
+        if (!ModelState.IsValid)
+            return View(editarVm);    
+
+        EditarProdutoDto dto = mapeador.Map<EditarProdutoDto>(editarVm);
+
+        Result resultado = servicoProduto.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            return View(editarVm);
+        }
+            
+        return RedirectToAction(nameof(Listar));
+    }
 }

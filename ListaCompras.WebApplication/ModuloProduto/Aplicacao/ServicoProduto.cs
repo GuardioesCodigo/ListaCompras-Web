@@ -31,6 +31,26 @@ public class ServicoProduto
         return Result.Ok();
     }
 
+    public Result Editar(EditarProdutoDto dto)
+    {
+        if (ExisteProdutoComNome(dto.Nome))
+            return Falha("Nome", "Já existe um produto dentro desta categoria com este nome.");
+
+        Produto produtoAtualizado = new Produto(
+            dto.Nome,
+            dto.UnidadeMedida,
+            dto.PrecoAproximado,
+            dto.Categoria
+        );
+
+        bool conseguiuEditar = repositorioProduto.Editar(dto.Id, produtoAtualizado);
+
+        if (!conseguiuEditar)
+            return Result.Fail("Produto não encontrado.");
+
+        return Result.Ok();
+    }
+
     public List<ListarProdutoDto> SelecionarTodos()
     {
         List<Produto> produtos = repositorioProduto.SelecionarTodos();
