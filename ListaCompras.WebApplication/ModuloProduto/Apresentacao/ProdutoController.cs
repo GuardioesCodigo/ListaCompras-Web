@@ -16,9 +16,18 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
 {
 
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(string categoriaNome)
     {
         List<ListarProdutoDto> dtos = servicoProduto.SelecionarTodos();
+
+        if (!string.IsNullOrEmpty(categoriaNome))
+        {
+            dtos = dtos
+                .Where(p => p.CategoriaNome == categoriaNome)
+                .ToList();
+        }
+
+        ViewBag.Categorias = servicoCategoria.SelecionarTodos();
 
         List<ListarProdutosViewModel> listarVms = mapeador.Map<List<ListarProdutosViewModel>>(dtos);
 
