@@ -34,9 +34,14 @@
             </select>
 
         <div class="mb-4">
-            <label asp-for="UnidadeMedida" class="form-label fw-semibold">Unidade de Medida</label>
-            <input asp-for="UnidadeMedida" type="text" class="form-control form-control-lg rounded-3 shadow-sm"
-                   placeholder="Ex: kg, litro, unidade">
+            <label asp-for="UnidadeMedida" class="form-label fw-semibold">Unidade de medida</label>
+            <select asp-for="UnidadeMedida" class="form-select form-select-lg rounded-3 shadow-sm">
+                <option value="">Selecione a unidade</option>
+                <option value="kg">kg</option>
+                <option value="unidade">unidade</option>
+                <option value="litro">litro</option>
+                <option value="caixa">caixa</option>
+            </select>
             <span asp-validation-for="UnidadeMedida" class="text-danger small"></span>
         </div>
 
