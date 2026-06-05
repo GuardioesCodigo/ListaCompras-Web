@@ -6,7 +6,7 @@ namespace ListaCompras.WebApplication.ModuloProduto.Apresentacao;
 public record ListarProdutosViewModel(
     string Id,
     string Nome,
-    string CategoriaId,
+    string CategoriaNome,
     string UnidadeMedida,
     decimal PrecoAproximado    
 );

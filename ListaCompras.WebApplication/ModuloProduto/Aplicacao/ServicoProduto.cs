@@ -24,7 +24,7 @@ public class ServicoProduto
         if (categoria is null)
         return Falha("Categoria", "Categoria não encontrada.");
 
-        if (ExisteProdutoComNome(dto.Nome))
+        if (ExisteProdutoComNome(dto.Nome, dto.CategoriaId))
             return Falha("Nome", "Já existe um produto dentro desta categoria com este nome.");
 
         Produto novoProduto = new Produto(
@@ -46,7 +46,7 @@ public class ServicoProduto
         if (categoria is null)
             return Falha("Categoria", "Categoria não encontrada.");
 
-        if (ExisteProdutoComNome(dto.Nome, dto.CategoriaId))
+        if (ExisteProdutoComNome(dto.Nome, dto.CategoriaId, dto.Id))
             return Falha("Nome", "Já existe um produto dentro desta categoria com este nome.");
 
         Produto produtoAtualizado = new Produto(
@@ -82,7 +82,7 @@ public class ServicoProduto
         
 
         return produtos
-            .Select(p => new ListarProdutoDto(p.Id, p.Nome, p.Categoria.Id, p.UnidadeMedida, p.PrecoAproximado))
+            .Select(p => new ListarProdutoDto(p.Id, p.Nome, p.Categoria.Nome, p.UnidadeMedida, p.PrecoAproximado))
             .ToList();
     }
 
@@ -102,17 +102,15 @@ public class ServicoProduto
         ));
     }
 
-    public bool ExisteProdutoComNome(string nome, string? idIgnorado = null)
+    public bool ExisteProdutoComNome(string nome, string categoriaId, string? idIgnorado = null)
     {
         List<Produto> produtos = repositorioProduto.SelecionarTodos();
 
-        foreach (Produto p in produtos)
-        {
-            if (p.Id != idIgnorado && string.Equals(p.Nome, nome, StringComparison.OrdinalIgnoreCase))
-                return true;
-        }
-
-        return false;
+        return produtos.Any(p =>
+            p.Id != idIgnorado &&
+            p.Categoria.Id == categoriaId &&
+            string.Equals(p.Nome, nome, StringComparison.OrdinalIgnoreCase)
+        );
     }
 
     private static Result Falha(string campo, string mensagem)

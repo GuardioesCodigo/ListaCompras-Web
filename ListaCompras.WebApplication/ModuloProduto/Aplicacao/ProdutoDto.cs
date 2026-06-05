@@ -6,7 +6,7 @@ namespace ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 public record ListarProdutoDto(
     string Id,
     string Nome,
-    string CategoriaId,
+    string CategoriaNome,
     string UnidadeMedida,
     decimal PrecoAproximado
 );
