@@ -77,6 +77,8 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
 
         EditarProdutoViewModel editarVm = mapeador.Map<EditarProdutoViewModel>(dto);
 
+        ViewBag.Categoria = CarregarCategorias();
+
         return View(editarVm);
     }
 

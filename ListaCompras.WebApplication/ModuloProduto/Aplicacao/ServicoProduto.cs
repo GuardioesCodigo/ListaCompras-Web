@@ -43,7 +43,10 @@ public class ServicoProduto
     {
         Categoria? categoria = repositorioCategoria.SelecionarPorId(dto.CategoriaId);
 
-        if (ExisteProdutoComNome(dto.Nome))
+        if (categoria is null)
+            return Falha("Categoria", "Categoria não encontrada.");
+
+        if (ExisteProdutoComNome(dto.Nome, dto.CategoriaId))
             return Falha("Nome", "Já existe um produto dentro desta categoria com este nome.");
 
         Produto produtoAtualizado = new Produto(
