@@ -17,13 +17,21 @@ public class CategoriaController: Controller
     }
 
     [HttpGet]
-    public ActionResult Listar()
+    public ActionResult Listar(string status)
     {
+        string? statusSelecionado = status;
+
         List<ListarCategoriaDto> dtos = servicoCategoria.SelecionarTodos();
+
+        if (Enum.TryParse(status, out CorCategoria cor))
+        {
+            dtos = dtos.Where(c => c.Cor == cor).ToList();
+        }
 
         List<ListarCategoriasViewModel> listarVms = dtos
             .Select(c => new ListarCategoriasViewModel(c.Id, c.Nome, c.Cor))
             .ToList();
+            
 
         return View(listarVms);
     }
