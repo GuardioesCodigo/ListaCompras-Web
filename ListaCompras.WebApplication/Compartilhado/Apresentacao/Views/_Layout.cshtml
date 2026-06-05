@@ -4,16 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Stocka</title>
+
     @* Importação do CSS do Bootstrap *@
     <link rel="stylesheet" href="~/lib/bootstrap-5.3.8-dist/css/bootstrap.min.css">
 
-    <title>Stocka</title>
+    @* Importação do CSS do projeto *@
+    <link rel="stylesheet" href="~/css/style.css">
+
 </head>
-<body>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container-fluid">
+
+            <a class="navbar-brand fw-bold" href="/">
+                Stocka
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStocka">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarStocka">
+
+                <ul class="navbar-nav me-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                         <a class="nav-link" asp-controller="Categoria" asp-action="Listar">Categorias</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Produto" asp-action="Listar">Produtos</a>
+                    </li>
+
+                </ul>
+
+                <div class="d-flex align-items-center gap-2">
+
+                    <span class="text-white small">
+                        Organize hoje, economize sempre.    
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </nav>
 
     @* Cabeçalho da Página *@
     <header class="container py-4">
-        <h2>@ViewBag.Titulo</h2>
+        <h2>Stocka</h2>
     </header>
 
     @* Conteúdo da Página *@
@@ -22,6 +67,7 @@
     </main>
 
     @* Importação do JavaScript do Bootstrap *@
-    <script src="~/lib/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"> </script>
+    <script src="~/lib/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
