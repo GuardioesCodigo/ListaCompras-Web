@@ -31,7 +31,7 @@ public class ServicoProduto
             dto.Nome,
             dto.UnidadeMedida,
             dto.PrecoAproximado,
-            dto.CategoriaId
+            categoria
         );
 
         repositorioProduto.Cadastrar(novoProduto);
@@ -41,6 +41,8 @@ public class ServicoProduto
 
     public Result Editar(EditarProdutoDto dto)
     {
+        Categoria? categoria = repositorioCategoria.SelecionarPorId(dto.CategoriaId);
+
         if (ExisteProdutoComNome(dto.Nome))
             return Falha("Nome", "Já existe um produto dentro desta categoria com este nome.");
 
@@ -48,7 +50,7 @@ public class ServicoProduto
             dto.Nome,
             dto.UnidadeMedida,
             dto.PrecoAproximado,
-            dto.CategoriaId
+            categoria
         );
 
         bool conseguiuEditar = repositorioProduto.Editar(dto.Id, produtoAtualizado);
@@ -74,9 +76,10 @@ public class ServicoProduto
     public List<ListarProdutoDto> SelecionarTodos()
     {
         List<Produto> produtos = repositorioProduto.SelecionarTodos();
+        
 
         return produtos
-            .Select(p => new ListarProdutoDto(p.Id, p.Nome, p.CategoriaId, p.UnidadeMedida, p.PrecoAproximado))
+            .Select(p => new ListarProdutoDto(p.Id, p.Nome, p.Categoria.Id, p.UnidadeMedida, p.PrecoAproximado))
             .ToList();
     }
 
@@ -90,7 +93,7 @@ public class ServicoProduto
         return Result.Ok( new DetalhesProdutoDto(
             produtos.Id, 
             produtos.Nome, 
-            produtos.CategoriaId, 
+            produtos.Categoria.Id, 
             produtos.UnidadeMedida, 
             produtos.PrecoAproximado
         ));
