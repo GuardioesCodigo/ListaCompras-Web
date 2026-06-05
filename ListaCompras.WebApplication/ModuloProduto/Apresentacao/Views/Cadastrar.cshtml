@@ -1,4 +1,5 @@
-﻿@using ListaCompras.WebApplication.ModuloProduto.Apresentacao
+﻿@using ListaCompras.WebApplication.ModuloCategoria.Dominio
+@using ListaCompras.WebApplication.ModuloProduto.Apresentacao
 @{
     Layout = "_Layout";
     ViewBag.Titulo = "Listagem de Produtos";
@@ -23,28 +24,27 @@
         </div>
 
         <div class="mb-4">
-            <label asp-for="Categoria" class="form-label fw-semibold">Categoria</label>
-            <select asp-for="Categoria" class="form-select form-select-lg rounded-3 shadow-sm">
+            <label asp-for="CategoriaId" class="form-label fw-semibold">Categoria</label>
+
+            <select asp-for="CategoriaId"
+                    asp-items="ViewBag.Categoria"
+                    class="form-select">
                 <option value="">Selecione uma categoria</option>
-                <!-- Exemplo de opções -->
-                <option value="Alimentos">Alimentos</option>
-                <option value="Limpeza">Limpeza</option>
-                <option value="Higiene">Higiene</option>
-                <option value="Outros">Outros</option>
             </select>
-            <span asp-validation-for="Categoria" class="text-danger small"></span>
+
+            <span asp-validation-for="CategoriaId" class="text-danger small"></span>
         </div>
 
         <div class="mb-4">
-            <label asp-for="UnidadeDeMedida" class="form-label fw-semibold">Unidade de medida</label>
-            <select asp-for="UnidadeDeMedida" class="form-select form-select-lg rounded-3 shadow-sm">
+            <label asp-for="UnidadeMedida" class="form-label fw-semibold">Unidade de medida</label>
+            <select asp-for="UnidadeMedida" class="form-select form-select-lg rounded-3 shadow-sm">
                 <option value="">Selecione a unidade</option>
                 <option value="kg">kg</option>
                 <option value="unidade">unidade</option>
                 <option value="litro">litro</option>
                 <option value="caixa">caixa</option>
             </select>
-            <span asp-validation-for="UnidadeDeMedida" class="text-danger small"></span>
+            <span asp-validation-for="UnidadeMedida" class="text-danger small"></span>
         </div>
 
         <div class="mb-4">

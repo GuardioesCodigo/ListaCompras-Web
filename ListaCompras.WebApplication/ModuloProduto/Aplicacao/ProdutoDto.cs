@@ -6,14 +6,14 @@ namespace ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 public record ListarProdutoDto(
     string Id,
     string Nome,
-    Categoria Categoria,
+    string CategoriaId,
     string UnidadeMedida,
     decimal PrecoAproximado
 );
 
 public record CadastrarProdutoDto(   
     string Nome,
-    Categoria Categoria,
+    string CategoriaId,
     string UnidadeMedida,
     decimal PrecoAproximado
 );
@@ -21,7 +21,7 @@ public record CadastrarProdutoDto(
 public record EditarProdutoDto(
     string Id,
     string Nome,
-    Categoria Categoria,
+    string CategoriaId,
     string UnidadeMedida,
     decimal PrecoAproximado
 );
@@ -29,7 +29,7 @@ public record EditarProdutoDto(
 public record DetalhesProdutoDto(
     string Id,
     string Nome,
-    Categoria Categoria,
+    string CategoriaId,
     string UnidadeMedida,
     decimal PrecoAproximado
 );

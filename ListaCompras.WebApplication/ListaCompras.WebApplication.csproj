@@ -16,7 +16,6 @@
     <Folder Include="ModuloCategoria\Apresentacao\" />
     <Folder Include="ModuloCategoria\Apresentacao\Views\" />
     <Folder Include="ModuloProduto\Aplicacao\" />
-    <Folder Include="ModuloProduto\Apresentacao\" />
     <Folder Include="ModuloProduto\Apresentacao\Views\" />
   </ItemGroup>
 

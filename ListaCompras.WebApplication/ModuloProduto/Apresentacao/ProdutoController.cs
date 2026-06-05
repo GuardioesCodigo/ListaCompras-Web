@@ -1,12 +1,20 @@
 using AutoMapper;
 using FluentResults;
+using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
 using ListaCompras.WebApplication.Compartilhado.Apresentacao.Extensions;
+using ListaCompras.WebApplication.Compartilhado.Dominio;
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
+using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
+using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ListaCompras.WebApplication.ModuloProduto.Apresentacao;
-public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) : Controller
+
+public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria servicoCategoria, IMapper mapeador) : Controller
 {
+
     [HttpGet]
     public ActionResult Listar()
     {
@@ -20,14 +28,15 @@ public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) 
     [HttpGet]
     public ActionResult Cadastrar()
     {
-
+        ViewBag.Categoria = CarregarCategorias();
         
-        CadastrarProdutoViewModel cadastrarVm = new CadastrarProdutoViewModel(
-            string.Empty,
-            null,
-            string.Empty,
-            0m
-        );
+        CadastrarProdutoViewModel cadastrarVm = new CadastrarProdutoViewModel()
+        {
+            Id = string.Empty,
+            Nome = string.Empty,
+            CategoriaId = string.Empty,
+            UnidadeMedida = string.Empty
+        };
 
         return View(cadastrarVm);
     }
@@ -119,5 +128,18 @@ public class ProdutoController(ServicoProduto servicoProduto, IMapper mapeador) 
             TempData.AddErrorMessage(resultado);
 
         return RedirectToAction(nameof(Listar));
+    }
+
+    private List<SelectListItem> CarregarCategorias()
+    {
+        List<ListarCategoriaDto> categorias = servicoCategoria.SelecionarTodos();
+
+        return categorias
+            .Select(c => new SelectListItem
+            {
+                Value = c.Id,
+                Text = c.Nome
+            })
+            .ToList();
     }
 }

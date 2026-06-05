@@ -28,13 +28,11 @@
             <span asp-validation-for="Nome" class="text-danger small"></span>
         </div>
 
-        <div class="mb-4">
-            <label asp-for="Categoria" class="form-label fw-semibold">Categoria</label>
-            <select asp-for="Categoria" class="form-select form-control-lg rounded-3 shadow-sm">
-                <option value="">Selecione...</option>
+            <select asp-for="CategoriaId"
+                    asp-items="ViewBag.Categoria"
+                    class="form-select">
+                <option value="">Selecione uma categoria</option>
             </select>
-            <span asp-validation-for="Categoria" class="text-danger small"></span>
-        </div>
 
         <div class="mb-4">
             <label asp-for="UnidadeMedida" class="form-label fw-semibold">Unidade de Medida</label>

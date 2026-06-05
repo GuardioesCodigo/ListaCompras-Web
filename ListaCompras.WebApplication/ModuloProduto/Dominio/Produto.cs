@@ -31,11 +31,20 @@ public class Produto : EntidadeBase<Produto>
     {
         List<string> erros = new List<string>();
 
-        if (Nome.Length < 2 || Nome.Length > 100)
+        if (string.IsNullOrWhiteSpace(Nome))
+            erros.Add("O campo \"Nome\" deve ser preenchido.");
+
+        else if (Nome.Length < 2 || Nome.Length > 100)
             erros.Add("O campo \"Nome\" deve conter entre 2 e 100 caracteres.");
+
+        if (Categoria == null)
+            erros.Add("O campo \"Categoria\" deve ser preenchido.");
 
         if (string.IsNullOrWhiteSpace(UnidadeMedida))
             erros.Add("O campo \"Unidade de Medida\" deve ser preenchido.");
+
+        else if (UnidadeMedida.Length < 2 || UnidadeMedida.Length > 100)
+            erros.Add("O campo \"Unidade de Medida\" deve conter no máximo 20 caracteres.");
 
         if (PrecoAproximado == 0)
             erros.Add("O campo \"Preço Aproximado\" deve ser preenchido.");

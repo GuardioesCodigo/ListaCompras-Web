@@ -6,51 +6,32 @@ namespace ListaCompras.WebApplication.ModuloProduto.Apresentacao;
 public record ListarProdutosViewModel(
     string Id,
     string Nome,
-    Categoria Categoria,
+    string CategoriaId,
     string UnidadeMedida,
     decimal PrecoAproximado    
 );
 
-public record CadastrarProdutoViewModel(
-    [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "O campo \"Nome\" deve conter entre 2 e 100 caracteres.")]
-    string Nome,
+public class CadastrarProdutoViewModel{
 
-    [Required(ErrorMessage = "O campo \"Categoria\" deve ser selecionado.")]
-    string Categoria,
+    public string Id { get; set; } = string.Empty;
+    public string? Nome { get; set; }
+    public string? CategoriaId { get; set; }
+    public string? UnidadeMedida { get; set; }
+    public decimal PrecoAproximado { get; set; }
+}
 
-    [Required(ErrorMessage = "O campo \"Unidade de medida\" deve ser preenchido.")]
-    [StringLength(20, ErrorMessage = "O campo \"Unidade de medida\" deve conter no máximo 20 caracteres.")]
-    string UnidadeDeMedida,
-
-    [Required(ErrorMessage = "O campo \"Preço aproximado\" deve ser preenchido.")]
-    [Range(0.01, double.MaxValue, ErrorMessage = "O campo \"Preço aproximado\" deve ser maior que 0.")]
-    decimal PrecoAproximado
-);
-
-public record EditarProdutoViewModel(
-    string Id,
-
-    [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
-    [StringLength(100, MinimumLength = 2, ErrorMessage = "O campo \"Nome\" deve conter entre 2 e 100 caracteres.")]
-    string Nome,
-
-    [Required(ErrorMessage = "O campo \"Categoria\" deve ser selecionado.")]
-    string Categoria,
-
-    [Required(ErrorMessage = "O campo \"Unidade de medida\" deve ser preenchido.")]
-    [StringLength(20, ErrorMessage = "O campo \"Unidade de medida\" deve conter no máximo 20 caracteres.")]
-    string UnidadeMedida,
-
-    [Required(ErrorMessage = "O campo \"Preço aproximado\" deve ser preenchido.")]
-    [Range(0.01, double.MaxValue, ErrorMessage = "O campo \"Preço aproximado\" deve ser maior que 0.")]
-    decimal PrecoAproximado
-);
+public record EditarProdutoViewModel{
+    public string Id { get; set; } = string.Empty;
+    public string Nome { get; set; } = string.Empty;
+    public string CategoriaId { get; set; } = string.Empty;
+    public string UnidadeMedida { get; set; } = string.Empty;
+    public decimal PrecoAproximado { get; set; } = 0;
+}
 
 public record ExcluirProdutosViewModel(
     string Id,
     string Nome,
-    Categoria Categoria,
+    string CategoriaId,
     string UnidadeMedida,
     decimal PrecoAproximado    
 );

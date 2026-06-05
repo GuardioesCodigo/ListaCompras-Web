@@ -1,6 +1,7 @@
 using System;
 using FluentResults;
 using ListaCompras.WebApplication.Compartilhado.Dominio;
+using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloProduto.Aplicacao;
@@ -8,14 +9,20 @@ namespace ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 public class ServicoProduto
 {
     private readonly IRepositorio<Produto> repositorioProduto;
+    private readonly IRepositorio<Categoria> repositorioCategoria;
 
-    public ServicoProduto(IRepositorio<Produto> repositorioProduto)
+    public ServicoProduto(IRepositorio<Produto> repositorioProduto, IRepositorio<Categoria> repositorioCategoria)
     {
         this.repositorioProduto = repositorioProduto;
+        this.repositorioCategoria = repositorioCategoria;
     }
 
     public Result Cadastrar(CadastrarProdutoDto dto)
     {
+        Categoria? categoria = repositorioCategoria.SelecionarPorId(dto.CategoriaId);
+
+        if (categoria is null)
+        return Falha("Categoria", "Categoria não encontrada.");
 
         if (ExisteProdutoComNome(dto.Nome))
             return Falha("Nome", "Já existe um produto dentro desta categoria com este nome.");
@@ -24,7 +31,7 @@ public class ServicoProduto
             dto.Nome,
             dto.UnidadeMedida,
             dto.PrecoAproximado,
-            dto.Categoria
+            dto.CategoriaId
         );
 
         repositorioProduto.Cadastrar(novoProduto);
@@ -41,7 +48,7 @@ public class ServicoProduto
             dto.Nome,
             dto.UnidadeMedida,
             dto.PrecoAproximado,
-            dto.Categoria
+            dto.CategoriaId
         );
 
         bool conseguiuEditar = repositorioProduto.Editar(dto.Id, produtoAtualizado);
@@ -69,7 +76,7 @@ public class ServicoProduto
         List<Produto> produtos = repositorioProduto.SelecionarTodos();
 
         return produtos
-            .Select(p => new ListarProdutoDto(p.Id, p.Nome, p.Categoria, p.UnidadeMedida, p.PrecoAproximado))
+            .Select(p => new ListarProdutoDto(p.Id, p.Nome, p.CategoriaId, p.UnidadeMedida, p.PrecoAproximado))
             .ToList();
     }
 
@@ -83,7 +90,7 @@ public class ServicoProduto
         return Result.Ok( new DetalhesProdutoDto(
             produtos.Id, 
             produtos.Nome, 
-            produtos.Categoria, 
+            produtos.CategoriaId, 
             produtos.UnidadeMedida, 
             produtos.PrecoAproximado
         ));
