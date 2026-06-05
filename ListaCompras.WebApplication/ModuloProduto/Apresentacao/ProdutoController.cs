@@ -45,7 +45,10 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
     public ActionResult Cadastrar(CadastrarProdutoViewModel cadastrarVm)
     {
         if (!ModelState.IsValid)
+        {
+            ViewBag.Categoria = CarregarCategorias();
             return View(cadastrarVm);
+        }
 
         CadastrarProdutoDto dto = mapeador.Map<CadastrarProdutoDto>(cadastrarVm);
 
@@ -54,6 +57,10 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
         if (resultado.IsFailed)
         {
             ModelState.AddModelError(resultado);
+
+            ViewBag.Categoria = CarregarCategorias();
+
+            ModelState.Remove(nameof(CadastrarProdutoViewModel.CategoriaId));
 
             return View(cadastrarVm);
         }
@@ -86,7 +93,10 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
     public ActionResult Editar(EditarProdutoViewModel editarVm)
     {
         if (!ModelState.IsValid)
-            return View(editarVm);    
+        {
+            ViewBag.Categoria = CarregarCategorias();
+            return View(editarVm);
+        }  
 
         EditarProdutoDto dto = mapeador.Map<EditarProdutoDto>(editarVm);
 
@@ -95,6 +105,10 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
         if (resultado.IsFailed)
         {
             ModelState.AddModelError(resultado);
+
+            ViewBag.Categoria = CarregarCategorias();
+
+            ModelState.Remove(nameof(CadastrarProdutoViewModel.CategoriaId));
 
             return View(editarVm);
         }
