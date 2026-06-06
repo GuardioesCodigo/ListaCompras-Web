@@ -1,0 +1,63 @@
+﻿@model List<ListaCompras.Application.DTOS.ListaDeComprasDto>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Listas de Compras</title>
+</head>
+<body>
+
+    <h2>Gerenciador de Listas de Compras</h2>
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert-error">@TempData["MensagemErro"]</div>
+    }
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert-success">@TempData["MensagemSucesso"]</div>
+    }
+
+    <a href="/ListaCompras/Cadastrar" class="btn">Nova Lista</a>
+
+    @if (Model == null || !Model.Any())
+    {
+        <p>Nenhuma lista de compras cadastrada de verdade no arquivo.</p>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome da Lista</th>
+                    <th>Data de Criação</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lista in Model)
+                {
+                    <tr>
+                        <td><strong>@lista.Nome</strong></td>
+                        <td>@lista.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@lista.Status</td>
+                        <td>
+                            <form action="/ListaCompras/Excluir" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@lista.Id" />
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</body>
+</html>
