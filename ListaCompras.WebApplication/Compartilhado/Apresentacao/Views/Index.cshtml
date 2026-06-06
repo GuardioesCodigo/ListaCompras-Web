@@ -3,19 +3,30 @@
     ViewBag.Titulo = "Home";
 }
 
-<div class="row g-2">
-    <div class="col-lg-7">
+<div class="row align-items-center">
+
+    <div class="col-lg-5">
+
         <h1 class="display-5 fw-semibold mb-3">Lista de Compras</h1>
-        <p class="lead text-secondary mb-4">
-            Lista de compras do mês
-        </p>
 
-        <div class="d-flex flex-wrap gap-2">
-            <a class="btn btn-primary rounded-pill px-4" asp-controller="Categoria" asp-action="Listar">Listar Categoria</a>
-        </div>
+        <p class="lead text-secondary mb-4">Organize suas compras, controle seus produtos e economize com praticidade.</p>
 
-        <div class="d-flex flex-wrap gap-2">
-            <a class="btn btn-primary rounded-pill px-4" asp-controller="Produto" asp-action="Listar">Listar Produto</a>
+        <div class="d-flex flex-column gap-2">
+            <a class="btn btn-primary rounded-pill px-4" asp-controller="Categoria" asp-action="Listar">
+                Listar Categoria
+            </a>
+
+            <a class="btn btn-primary rounded-pill px-4" asp-controller="Produto" asp-action="Listar">
+                Listar Produto
+            </a>
         </div>
     </div>
+
+    <div class="col-lg-7 text-end">
+        <img src="~/Img/ImgCapa.png"
+            class="img-fluid"
+            style="max-width:650px"
+            alt="Lista de Compras">
+    </div>
+
 </div>
