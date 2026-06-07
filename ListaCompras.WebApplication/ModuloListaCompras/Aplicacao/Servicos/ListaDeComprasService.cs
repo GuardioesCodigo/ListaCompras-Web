@@ -1,3 +1,4 @@
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 using ListaCompras.WebApplication.ModuloListaCompras.Aplicacao;
 using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
 
@@ -6,17 +7,24 @@ namespace ListaCompras.WebApplication.ModuloListaCompras.Servicos;
 public class ListaDeComprasService
 {
     private readonly IListaDeComprasRepository _listaRepository;
+    private readonly ContextoJson _contexto; // Adicionamos o contexto aqui
 
-    public ListaDeComprasService(IListaDeComprasRepository listaRepository)
+    public ListaDeComprasService(IListaDeComprasRepository listaRepository, ContextoJson contexto)
     {
         _listaRepository = listaRepository;
+        _contexto = contexto;
+        
+        // Carregamos os dados aqui, uma única vez, na inicialização do serviço
+        _contexto.Carregar();
     }
 
-    // Criar agora recebe o Record de cadastro
     public void Criar(CadastrarListaComprasDto dto)
     {
         var lista = new ListaDeCompras(dto.Nome);
         _listaRepository.Cadastrar(lista);
+        
+        // Garantimos que a alteração seja persistida no arquivo
+        _contexto.Salvar();
     }
 
     public List<ListarListaComprasDto> SelecionarTodos()
@@ -55,5 +63,8 @@ public class ListaDeComprasService
             throw new Exception("Regra de Negócio: Não é possível excluir uma lista que possui itens vinculados.");
 
         _listaRepository.Excluir(id);
+        
+        // Persistimos a exclusão
+        _contexto.Salvar();
     }
 }

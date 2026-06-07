@@ -1,6 +1,6 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
-using ListaCompras.WebApplication.ModuloListaCompras;
 using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
@@ -8,61 +8,43 @@ namespace ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 
 public class ContextoJson
 {
-    public Guid IdInstancia { get; } = Guid.NewGuid(); 
     public List<Categoria> Categorias { get; set; } = new();
     public List<Produto> Produtos { get; set; } = new();
     public List<ListaDeCompras> ListaCompras { get; set; } = new();
-    
-    private readonly string caminhoArquivo;
+
+    private readonly string _caminhoArquivo;
 
     public ContextoJson()
     {
-        // Usando uma pasta fixa para teste (garantir que não é erro de permissão)
-        string pastaTeste = @"C:\TEMP";
-        if (!Directory.Exists(pastaTeste)) Directory.CreateDirectory(pastaTeste);
+        string pasta = @"C:\TEMP";
+        if (!Directory.Exists(pasta)) Directory.CreateDirectory(pasta);
+        _caminhoArquivo = Path.Combine(pasta, "dados_lista.json");
         
-        caminhoArquivo = Path.Combine(pastaTeste, "dados.json");
-        Console.WriteLine($"DEBUG: CONTEXTO CRIADO. ID: {IdInstancia} | Caminho: {caminhoArquivo}");
-        
-        Carregar();
+        // AQUI ESTÁ O PULO DO GATO:
+        // Não chamamos Carregar() aqui dentro do construtor, 
+        // pois isso está gerando a recursão infinita na inicialização do serviço.
     }
 
- public void Salvar()
-{
-    try 
+    public void Salvar()
     {
-        // 1. Forçamos um caminho fixo e absoluto para não haver erro de permissão
-        string caminho = @"C:\dados_lista.json"; 
-        
-        string jsonString = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
-        
-        // 2. Escreve o arquivo
-        File.WriteAllText(caminho, jsonString);
-        
-        // 3. Log de sucesso
-        Console.WriteLine($"DEBUG: ARQUIVO GERADO COM SUCESSO EM: {caminho}");
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(this, options);
+        File.WriteAllText(_caminhoArquivo, jsonString);
     }
-    catch (Exception ex) 
-    {
-        // 4. Se falhar, o erro aparecerá no terminal
-        Console.WriteLine($"DEBUG: ERRO CRÍTICO AO SALVAR JSON: {ex.Message}");
-    }
-}
 
+    // Chamaremos o carregar apenas quando realmente precisarmos
     public void Carregar()
     {
-        if (!File.Exists(caminhoArquivo)) return;
+        if (!File.Exists(_caminhoArquivo)) return;
 
-        try {
-            string jsonString = File.ReadAllText(caminhoArquivo);
-            var contextoSalvo = JsonSerializer.Deserialize<ContextoJson>(jsonString);
-            if (contextoSalvo != null) {
-                this.ListaCompras = contextoSalvo.ListaCompras;
-                Console.WriteLine($"DEBUG: CARREGADO com sucesso. Total: {ListaCompras.Count} itens.");
-            }
-        }
-        catch (Exception ex) {
-            Console.WriteLine($"DEBUG: ERRO AO CARREGAR: {ex.Message}");
+        string jsonString = File.ReadAllText(_caminhoArquivo);
+        var carregado = JsonSerializer.Deserialize<ContextoJson>(jsonString);
+        
+        if (carregado != null) 
+        {
+            this.Categorias = carregado.Categorias;
+            this.Produtos = carregado.Produtos;
+            this.ListaCompras = carregado.ListaCompras;
         }
     }
 }

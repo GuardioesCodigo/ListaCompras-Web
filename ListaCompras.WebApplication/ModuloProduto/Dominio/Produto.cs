@@ -9,6 +9,7 @@ public class Produto : EntidadeBase<Produto>
     public string UnidadeMedida { get; set; } = string.Empty;
     public decimal PrecoAproximado { get; set; } = 0m;
     public Categoria Categoria { get; set; } = null!;
+    public decimal Preco { get; set; }
 
     public Produto()
     {

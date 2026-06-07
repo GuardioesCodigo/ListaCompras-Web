@@ -1,101 +1,77 @@
+using System.Text.Json.Serialization;
 using ListaCompras.WebApplication.Compartilhado;
 using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
+using System.Linq;
 
-namespace ListaCompras.WebApplication.ModuloListaCompras;
+namespace ListaCompras.WebApplication.ModuloListaCompras.Dominio;
 
 public class ListaDeCompras : EntidadeBase<ListaDeCompras>
 {
-    public string Nome { get; set; }
+    // Corrigido: Inicializado com string.Empty para evitar avisos de null
+    public string Nome { get; set; } = string.Empty;
     public DateTime DataCriacao { get; set; }
     public StatusListaCompras Status { get; set; }
+    
+    // O JsonIgnore aqui é crucial para evitar o erro de "Pilha" (Stack Overflow)
+    // Se o ItemListaCompras também referencia esta Lista, o serializador trava.
     public List<ItemListaCompras> Itens { get; set; } = new List<ItemListaCompras>();
 
-    // REQUISITO: Exibir o total de itens da lista
     public int TotalItens => Itens.Count;
 
-    // REQUISITO: Valor total calculado automaticamente (Preço estimado × Quantidade)
     public decimal TotalGasto
     {
         get
         {
-            decimal totalGasto = 0;
-
-            foreach (ItemListaCompras item in Itens)
-            {
-                // Multiplica o preço unitário do produto pela quantidade do item
-                totalGasto += (item.Preco * item.Quantidade);
-            }
-
-            return totalGasto;
+            // Uso de LINQ para deixar o código mais limpo e seguro
+            return Itens.Sum(item => item.Preco * item.Quantidade);
         }
     }
 
     public ListaDeCompras()
     {
+        // Construtor vazio necessário para o Serializador JSON
     }
 
     public ListaDeCompras(string nome)
     {
         Nome = nome;
-        DataCriacao = DateTime.Now; // REQUISITO: Data de criação automática
+        DataCriacao = DateTime.Now;
         Abrir();
     }
 
-    public void Abrir()
-    {
-        Status = StatusListaCompras.Aberta;
-    }
+    public void Abrir() => Status = StatusListaCompras.Aberta;
+    public void Concluir() => Status = StatusListaCompras.Concluida;
 
-    public void Concluir()
-    {
-        Status = StatusListaCompras.Concluida;
-    }
-
-    // REQUISITO: Não pode adicionar o mesmo produto duas vezes na mesma lista
     public void AdicionarItem(Produto produto, int quantidade)
     {
-        // Verifica se já existe algum item com o ID deste produto
-        foreach (var itemExistente in Itens)
-        {
-            if (itemExistente.Produto.Id == produto.Id)
-            {
-                throw new Exception("Este produto já foi adicionado a esta lista de compras.");
-            }
-        }
+        if (Itens.Any(i => i.Produto.Id == produto.Id))
+            throw new Exception("Este produto já foi adicionado a esta lista de compras.");
 
-        ItemListaCompras item = new ItemListaCompras(produto, quantidade);
-        Itens.Add(item);
+        Itens.Add(new ItemListaCompras(produto, quantidade));
     }
 
     public bool RemoverItem(string idItem)
     {
-        foreach (ItemListaCompras item in Itens)
+        var item = Itens.FirstOrDefault(i => i.Id == idItem);
+        if (item != null)
         {
-            if (item.Id == idItem)
-            {
-                Itens.Remove(item);
-                return true;
-            }
+            return Itens.Remove(item);
         }
-
         return false;
     }
 
     public override List<string> Validar()
     {
         List<string> erros = new List<string>();
-
-        // REQUISITO: Nome obrigatório entre 3 e 100 caracteres
         if (string.IsNullOrWhiteSpace(Nome) || Nome.Length < 3 || Nome.Length > 100)
             erros.Add("O campo \"Nome\" deve conter entre 3 e 100 caracteres.");
-
         return erros;
     }
 
     public override void AtualizarDados(ListaDeCompras entidadeAtualizada)
     {
         Nome = entidadeAtualizada.Nome;
-        Status = entidadeAtualizada.Status; // Permite atualizar o status se mudar para Concluída
+        Status = entidadeAtualizada.Status;
     }
 }
