@@ -1,5 +1,4 @@
 using FluentResults;
-using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
 using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;

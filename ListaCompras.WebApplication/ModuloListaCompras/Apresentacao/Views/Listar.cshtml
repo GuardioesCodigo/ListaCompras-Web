@@ -1,8 +1,10 @@
-﻿@model List<ListaCompras.Application.DTOS.ListaDeComprasDto>
-
+﻿
 @{
     Layout = null;
 }
+
+@using ListaCompras.WebApplication.ModuloListaCompras.Apresentacao;
+@model IEnumerable<ListaComprasViewModel>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -45,7 +47,7 @@
                 {
                     <tr>
                         <td><strong>@lista.Nome</strong></td>
-                        <td>@lista.DataCriacao.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@lista.DataCriacaoFormatada</td>
                         <td>@lista.Status</td>
                         <td>
                             <form action="/ListaCompras/Excluir" method="post" style="display:inline;">

@@ -1,7 +1,8 @@
-using ListaDeCompras.WebApplication.Compartilhado;
-using ListaDeCompras.WebApplication.ModuloProduto.Dominio;
+using ListaCompras.WebApplication.Compartilhado;
+using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
+using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
-namespace ListaDeCompras.WebApplication.ModuloListaCompras;
+namespace ListaCompras.WebApplication.ModuloListaCompras;
 
 public class ListaDeCompras : EntidadeBase<ListaDeCompras>
 {

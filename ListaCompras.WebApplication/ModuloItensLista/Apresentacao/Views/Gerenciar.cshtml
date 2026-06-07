@@ -1,44 +1,41 @@
-﻿@using ListaCompras.Application.Dtos;
-@using listaCompras.Webapplication.ModuloItensLista;
-@using ListaCompras.WebApplication.ModuloProduto.Dominio;
-
-@model ItemListaFormViewModel;
+﻿@using ListaCompras.WebApplication.ModuloListaCompras.Aplicacao
+@using ListaCompras.WebApplication.ModuloItensLista
+@model ListaCompras.WebApplication.ModuloItensLista.ItemListaFormViewModel
 
 @{
     Layout = "_Layout";
     
-    // CORREÇÃO DOS AVISOS DE NULIDADE: Garantindo tipos seguros ou instâncias vazias para evitar erros de compilação
-    var lista = ViewBag.Lista as ListaDeComprasDto ?? new ListaDeComprasDto { Nome = "Lista", Status = "Aberta" };
+    // Certifique-se de que o tipo aqui corresponda exatamente ao DTO que você envia no Controller
+    var lista = ViewBag.Lista as DetalhesListaComprasDto; 
     var itens = ViewBag.Itens as List<ItemListaComprasDto> ?? new List<ItemListaComprasDto>();
-    var produtos = ViewBag.ProdutosDisponiveis as List<Produto> ?? new List<Produto>();
+    var produtos = ViewBag.ProdutosDisponiveis as List<ListaCompras.WebApplication.ModuloProduto.Dominio.Produto> ?? new List<ListaCompras.WebApplication.ModuloProduto.Dominio.Produto>();
     
-    ViewBag.Titulo = $"Gerenciando: {lista.Nome}";
+    ViewBag.Titulo = $"Gerenciando: {lista?.Nome ?? "Lista de Compras"}";
 }
 
 <div class="container mt-5">
     
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="fw-bold text-primary m-0">@lista.Nome</h2>
-            <p class="text-muted m-0">Criada em @lista.DataCriacao.ToShortDateString() | Status: <span class="fw-semibold text-success">@lista.Status</span></p>
+            <h2 class="fw-bold text-primary m-0">@lista?.Nome</h2>
+            <p class="text-muted m-0">
+                Criada em @(lista?.DataCriacao.ToString("dd/MM/yyyy")) | 
+                Status: <span class="fw-semibold text-success">@lista?.Status</span>
+            </p>
         </div>
         <div class="card border-0 shadow-sm rounded-4 px-4 py-3 bg-primary text-white text-end">
             <small class="text-uppercase tracking-wider opacity-75">Total da Lista</small>
-            <h3 class="fw-bold m-0">R$ @lista.TotalGasto.ToString("N2")</h3>
+            <h3 class="fw-bold m-0">R$ @(lista?.TotalGasto.ToString("N2") ?? "0,00")</h3>
         </div>
     </div>
 
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div class="alert alert-success border-0 shadow-sm rounded-3 mb-3">
-            @TempData["MensagemSucesso"]
-        </div>
+        <div class="alert alert-success border-0 shadow-sm rounded-3 mb-3">@TempData["MensagemSucesso"]</div>
     }
     @if (TempData["MensagemErro"] != null)
     {
-        <div class="alert alert-danger border-0 shadow-sm rounded-3 mb-3">
-            @TempData["MensagemErro"]
-        </div>
+        <div class="alert alert-danger border-0 shadow-sm rounded-3 mb-3">@TempData["MensagemErro"]</div>
     }
 
     <div class="card border-0 shadow-sm rounded-4 p-4 mb-5">
@@ -53,7 +50,6 @@
                         <option value="">Selecione um produto</option>
                         @foreach (var p in produtos)
                         {
-                            @* CORREÇÃO: Alterado de p.Preco para p.PrecoAproximado *@
                             <option value="@p.Id">@p.Nome (R$ @p.PrecoAproximado.ToString("N2"))</option>
                         }
                     </select>
@@ -78,9 +74,7 @@
     <h4 class="fw-bold text-secondary mb-3">Produtos na Lista</h4>
     @if (itens.Count == 0)
     {
-        <div class="alert alert-secondary border-0 shadow-sm rounded-4 p-4">
-            Nenhum produto adicionado a esta lista ainda.
-        </div>
+        <div class="alert alert-secondary border-0 shadow-sm rounded-4 p-4">Nenhum produto adicionado ainda.</div>
     }
     else
     {
@@ -109,11 +103,9 @@
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <form action="/ItensLista/Remover" method="post" onsubmit="return confirm('Remover este item?')">
-                                            <input type="hidden" name="listaId" value="@lista.Id" />
+                                            <input type="hidden" name="listaId" value="@lista?.Id" />
                                             <input type="hidden" name="itemId" value="@item.Id" />
-                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">
-                                                Remover
-                                            </button>
+                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">Remover</button>
                                         </form>
                                     </div>
                                 </td>
@@ -126,8 +118,6 @@
     }
 
     <div class="mt-3 mb-5">
-        <a class="btn btn-outline-secondary rounded-pill px-4" href="/ListaCompras/Listar">
-            Voltar para Listas
-        </a>
+        <a class="btn btn-outline-secondary rounded-pill px-4" href="/ListaCompras/Listar">Voltar para Listas</a>
     </div>
 </div>

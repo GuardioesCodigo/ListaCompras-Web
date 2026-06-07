@@ -1,16 +1,15 @@
-using ListaCompras.Application.DTOs;
+using ListaCompras.WebApplication.ModuloListaCompras.Aplicacao; // Ajuste para o namespace correto dos seus DTOs
 using ListaCompras.WebApplication.ModuloListaCompras.Dominio; 
 using ListaCompras.WebApplication.ModuloProduto.Dominio; 
-using ListaCompras.WebApplication.Compartilhado.Dominio; // 👈 ADICIONADO: Para enxergar o IRepositorio genérico
+using ListaCompras.WebApplication.Compartilhado.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloItensLista.Servicos;
 
 public class ItemListaComprasService
 {
     private readonly IListaDeComprasRepository _listaRepository;
-    private readonly IRepositorio<Produto> _produtoRepository; // 👈 ALTERADO: De IRepositorioProduto para IRepositorio<Produto>
+    private readonly IRepositorio<Produto> _produtoRepository;
 
-    // 👈 ALTERADO: Construtor agora aceita o tipo genérico correto
     public ItemListaComprasService(IListaDeComprasRepository listaRepository, IRepositorio<Produto> produtoRepository)
     {
         _listaRepository = listaRepository;
@@ -22,21 +21,21 @@ public class ItemListaComprasService
         var lista = _listaRepository.SelecionarPorId(listaId);
         if (lista == null) return new List<ItemListaComprasDto>();
 
-        return lista.Itens.Select(i => new ItemListaComprasDto
-        {
-            Id = i.Id,
-            ProdutoId = i.Produto.Id,
-            NomeProduto = i.Produto.Nome,
-            CategoriaProduto = i.Produto.Categoria?.Nome ?? "Sem Categoria",
-            Quantidade = i.Quantidade,
-            PrecoUnitario = i.Preco
-        }).ToList();
+        // Refatorado para usar o construtor do record
+        return lista.Itens.Select(i => new ItemListaComprasDto(
+            i.Id,
+            i.Produto.Id,
+            i.Produto.Nome,
+            i.Produto.Categoria?.Nome ?? "Sem Categoria",
+            i.Quantidade,
+            i.Preco
+        )).ToList();
     }
 
     public void AdicionarItem(string listaId, string produtoId, int quantidade)
     {
         var lista = _listaRepository.SelecionarPorId(listaId);
-        var produto = _produtoRepository.SelecionarPorId(produtoId); // 👈 Continua funcionando igual porque o genérico tem esse método!
+        var produto = _produtoRepository.SelecionarPorId(produtoId);
 
         if (lista == null) throw new Exception("Lista de compras não existe.");
         if (produto == null) throw new Exception("Produto inválido.");

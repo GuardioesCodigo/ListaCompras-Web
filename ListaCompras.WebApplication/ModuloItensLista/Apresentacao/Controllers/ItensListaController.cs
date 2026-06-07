@@ -21,7 +21,7 @@ public class ItensListaController : Controller
 
     public IActionResult Gerenciar(string listaId)
     {
-        var listaDto = _listaService.ObterPorId(listaId);
+        var listaDto = _listaService.SelecionarPorId(listaId);
         if (listaDto == null) return NotFound();
 
         ViewBag.Lista = listaDto;

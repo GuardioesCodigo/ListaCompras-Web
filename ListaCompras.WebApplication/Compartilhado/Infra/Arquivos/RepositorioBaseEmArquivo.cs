@@ -1,88 +1,58 @@
-using ListaDeCompras.WebApplication.Compartilhado.Infra.Arquivos;
+using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 
-namespace ListaDeCompras.WebApplication.Compartilhado.Arquivos;
+namespace ListaCompras.WebApplication.Compartilhado.Arquivos;
 
 public abstract class RepositorioBaseEmArquivo<T> where T : EntidadeBase<T>
 {
     protected ContextoJson contexto;
-    protected List<T> registros;
 
     public RepositorioBaseEmArquivo(ContextoJson contexto)
     {
         this.contexto = contexto;
-
-        this.registros = CarregarRegistros();
     }
 
-    protected abstract List<T> CarregarRegistros();
+    protected abstract List<T> ObterListaDoContexto();
 
-    public void Cadastrar(T entidade)
+    // --- MÉTODOS QUE FALTAVAM NA BASE ---
+
+    public virtual List<T> SelecionarTodos()
     {
-        registros.Add(entidade);
-
-        contexto.Salvar();
+        return ObterListaDoContexto();
     }
 
-    public bool Editar(string idSelecionado, T entidadeAtualizada)
+    public virtual T? SelecionarPorId(string idSelecionado)
     {
-        T? registroSelecionado = SelecionarPorId(idSelecionado);
+        return ObterListaDoContexto().FirstOrDefault(r => r.Id == idSelecionado);
+    }
 
-        if (registroSelecionado == null)
-            return false;
+    public virtual bool Editar(string idSelecionado, T entidadeAtualizada)
+    {
+        T? registro = SelecionarPorId(idSelecionado);
+        if (registro == null) return false;
 
-        registroSelecionado.AtualizarDados(entidadeAtualizada);
-
+        registro.AtualizarDados(entidadeAtualizada);
         contexto.Salvar();
-
         return true;
     }
 
-    public bool Excluir(T registro)
+    public virtual bool Excluir(string idSelecionado)
     {
-        bool conseguiuExcluir = registros.Remove(registro);
+        T? registro = SelecionarPorId(idSelecionado);
+        if (registro == null) return false;
 
-        if (conseguiuExcluir)
-            contexto.Salvar();
-
-        return conseguiuExcluir;
+        bool conseguiu = ObterListaDoContexto().Remove(registro);
+        if (conseguiu) contexto.Salvar();
+        return conseguiu;
     }
 
-    public bool Excluir(string idSelecionado)
+    public virtual List<T> Filtrar(Predicate<T> filtro)
     {
-        T? registroSelecionado = SelecionarPorId(idSelecionado);
-
-        if (registroSelecionado == null)
-            return false;
-
-        return Excluir(registroSelecionado);
+        return ObterListaDoContexto().FindAll(filtro);
     }
 
-    public T? SelecionarPorId(string idSelecionado)
+    public virtual void Cadastrar(T entidade)
     {
-        foreach (T registro in registros)
-        {
-            if (registro.Id == idSelecionado)
-                return registro;
-        }
-
-        return null;
-    }
-
-    public List<T> SelecionarTodos()
-    {
-        return registros;
-    }
-
-    public List<T> Filtrar(Predicate<T> filtro)
-    {
-        List<T> registrosFiltrados = new List<T>();
-
-        foreach (T e in registros)
-        {
-            if (filtro(e))
-                registrosFiltrados.Add(e);
-        }
-
-        return registrosFiltrados;
+        ObterListaDoContexto().Add(entidade);
+        contexto.Salvar();
     }
 }
