@@ -31,7 +31,7 @@ public record EditarProdutoViewModel{
 public record ExcluirProdutosViewModel(
     string Id,
     string Nome,
-    string CategoriaId,
+    string CategoriaNome,
     string UnidadeMedida,
     decimal PrecoAproximado    
 );

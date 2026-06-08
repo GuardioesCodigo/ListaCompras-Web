@@ -97,7 +97,7 @@ public class ServicoProduto
         return Result.Ok( new DetalhesProdutoDto(
             produtos.Id, 
             produtos.Nome, 
-            produtos.Categoria.Id, 
+            produtos.Categoria.Nome, 
             produtos.UnidadeMedida, 
             produtos.PrecoAproximado
         ));
