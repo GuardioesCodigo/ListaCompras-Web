@@ -2,6 +2,7 @@ using System;
 using FluentResults;
 using ListaCompras.WebApplication.Compartilhado.Dominio;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
+using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloProduto.Aplicacao;
@@ -119,4 +120,6 @@ public class ServicoProduto
 
         return Result.Fail(erro);
     }
+
+   
 }

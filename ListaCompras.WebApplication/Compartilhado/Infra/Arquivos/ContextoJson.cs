@@ -3,12 +3,14 @@ using System.Text.Json.Serialization;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using ListaCompras.WebApplication.ModuloListaCompras;
 using ListaCompras.WebApplication.ModuloProduto;
+using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 
 public class ContextoJson
 {
+
     public List<Categoria> Categorias { get; set; } = new List<Categoria>();
     public List<Produto> Produtos { get; set; } = new List<Produto>();
     public List<ListaDeCompras> ListaCompras {get; set;} = new List<ListaDeCompras>();
@@ -30,9 +32,9 @@ public class ContextoJson
 
         caminhoArquivo = Path.Combine(caminhoDiretorio, "dados.json");
     }
-
     public void Salvar()
     {
+
         JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
         opcoesJson.WriteIndented = true;
         opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -44,23 +46,29 @@ public class ContextoJson
     }
 
     public void Carregar()
-    {
-        if (!File.Exists(caminhoArquivo))
-            return;
+{
+    if (!File.Exists(caminhoArquivo))
+        return;
 
-        string jsonString = File.ReadAllText(caminhoArquivo);
+    string jsonString = File.ReadAllText(caminhoArquivo);
 
-        JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
-        opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
+    JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
+    opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
 
-        ContextoJson? contextoSalvo = JsonSerializer
-            .Deserialize<ContextoJson>(jsonString, opcoesJson);
+    ContextoJson? contextoSalvo = JsonSerializer
+        .Deserialize<ContextoJson>(jsonString, opcoesJson);
 
-        if (contextoSalvo == null)
-            return;
+    if (contextoSalvo == null)
+        return;
 
-        Produtos = contextoSalvo.Produtos;
-        Categorias = contextoSalvo.Categorias;
-     }
+    // AQUI ESTAVA FALTANDO A LINHA ABAIXO:
+    ListaCompras = contextoSalvo.ListaCompras; 
+    
+    Produtos = contextoSalvo.Produtos;
+    Categorias = contextoSalvo.Categorias;
 }
+}
+
+   
+

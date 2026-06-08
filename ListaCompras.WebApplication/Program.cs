@@ -1,6 +1,6 @@
-﻿using ListaCompras.WebApp.Compartilhado.Aplicacao;
-using ListaCompras.WebApplication.Compartilhado;
+﻿using ListaCompras.WebApplication.Compartilhado;
 using ListaCompras.WebApplication.Compartilhado.Infra;
+using ListaCompras.WebApp.Compartilhado.Aplicacao;
 
 var builder = WebApplication.CreateBuilder(args);
 

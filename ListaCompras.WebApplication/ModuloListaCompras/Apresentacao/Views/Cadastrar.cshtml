@@ -1,0 +1,35 @@
+@using ListaCompras.WebApplication.ModuloListaCompras.Apresentacao
+@model ListaComprasFormViewModel
+
+@{
+    Layout = null;
+    ViewBag.Titulo = "Cadastro de Lista";
+}
+
+<div class="container d-flex justify-content-center align-items-center"
+     style="min-height: calc(100vh - 120px);">
+
+    <form class="card border-0 shadow-lg p-4 rounded-4 w-100"
+          style="max-width: 620px;"
+          asp-action="Cadastrar"
+          method="post">
+
+        <h3 class="fw-bold text-primary mb-4">Nova Lista de Compras</h3>
+
+        <div class="mb-4">
+            <label asp-for="Nome" class="form-label fw-semibold">Nome da Lista</label>
+            <input asp-for="Nome" type="text" class="form-control form-control-lg rounded-3 shadow-sm" placeholder="Ex: Compras do Mês">
+            <span asp-validation-for="Nome" class="text-danger small"></span>
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mt-4">
+            <a class="btn btn-outline-secondary rounded-pill px-4 py-2" asp-action="Listar">
+                Voltar
+            </a>
+
+            <button class="btn btn-primary rounded-pill px-4 py-2 shadow-sm" type="submit">
+                Confirmar
+            </button>
+        </div>
+    </form>
+</div>
