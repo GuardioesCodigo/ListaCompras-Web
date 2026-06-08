@@ -32,6 +32,7 @@ public class ContextoJson
 
         caminhoArquivo = Path.Combine(caminhoDiretorio, "dados.json");
     }
+    
     public void Salvar()
     {
 
@@ -46,28 +47,26 @@ public class ContextoJson
     }
 
     public void Carregar()
-{
-    if (!File.Exists(caminhoArquivo))
-        return;
+    {
+        if (!File.Exists(caminhoArquivo))
+            return;
 
-    string jsonString = File.ReadAllText(caminhoArquivo);
+        string jsonString = File.ReadAllText(caminhoArquivo);
 
-    JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
-    opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
+        JsonSerializerOptions opcoesJson = new JsonSerializerOptions();
+        opcoesJson.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        opcoesJson.ReferenceHandler = ReferenceHandler.Preserve;
 
-    ContextoJson? contextoSalvo = JsonSerializer
-        .Deserialize<ContextoJson>(jsonString, opcoesJson);
+        ContextoJson? contextoSalvo = JsonSerializer
+            .Deserialize<ContextoJson>(jsonString, opcoesJson);
 
-    if (contextoSalvo == null)
-        return;
+        if (contextoSalvo == null)
+            return;
 
-    // AQUI ESTAVA FALTANDO A LINHA ABAIXO:
-    ListaCompras = contextoSalvo.ListaCompras; 
-    
-    Produtos = contextoSalvo.Produtos;
-    Categorias = contextoSalvo.Categorias;
-}
+        Produtos = contextoSalvo.Produtos;
+        Categorias = contextoSalvo.Categorias;
+        ListaCompras = contextoSalvo.ListaCompras; 
+    }
 }
 
    
