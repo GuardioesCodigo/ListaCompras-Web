@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ListaCompras.WebApplication.ModuloCategoria.Apresentacao;
 
 public record ListarCategoriasViewModel(
-    string Id,
+    Guid Id,
     string Nome,
     CorCategoria Cor
 );
@@ -20,7 +20,7 @@ public record CadastrarCategoriasViewModel(
 );
 
 public record EditarCategoriasViewModel(
-    string Id,
+    Guid Id,
 
     [Required(ErrorMessage = "O campo \"Nome\" deve ser preenchido.")]
     [StringLength(50, ErrorMessage = "O campo \"Nome\" deve conter no máximo 50 caracteres.")]
@@ -31,7 +31,7 @@ public record EditarCategoriasViewModel(
 );
 
 public record ExcluirCategoriasViewModel(
-    string Id,
+    Guid Id,
     string Nome,
     CorCategoria Cor
 );

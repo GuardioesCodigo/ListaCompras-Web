@@ -3,7 +3,7 @@ using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 namespace ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
 
 public record ListarCategoriaDto(
-    string Id,
+    Guid Id,
     string Nome,
     CorCategoria Cor
 );
@@ -14,13 +14,13 @@ public record CadastrarCategoriaDto(
 );
 
 public record EditarCategoriaDto(
-    string Id,
+    Guid Id,
     string Nome,
     CorCategoria Cor
 );
 
 public record DetalhesCategoriaDto(
-    string Id,
+    Guid Id,
     string Nome,
     CorCategoria Cor
 );

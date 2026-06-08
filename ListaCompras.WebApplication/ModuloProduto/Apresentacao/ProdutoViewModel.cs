@@ -4,7 +4,7 @@ using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 namespace ListaCompras.WebApplication.ModuloProduto.Apresentacao;
 
 public record ListarProdutosViewModel(
-    string Id,
+    Guid Id,
     string Nome,
     string CategoriaNome,
     string UnidadeMedida,
@@ -13,7 +13,7 @@ public record ListarProdutosViewModel(
 
 public class CadastrarProdutoViewModel{
 
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
     public string? Nome { get; set; }
     public string? CategoriaId { get; set; }
     public string? UnidadeMedida { get; set; }
@@ -21,7 +21,7 @@ public class CadastrarProdutoViewModel{
 }
 
 public record EditarProdutoViewModel{
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; }
     public string Nome { get; set; } = string.Empty;
     public string CategoriaId { get; set; } = string.Empty;
     public string UnidadeMedida { get; set; } = string.Empty;
@@ -29,7 +29,7 @@ public record EditarProdutoViewModel{
 }
 
 public record ExcluirProdutosViewModel(
-    string Id,
+    Guid Id,
     string Nome,
     string CategoriaId,
     string UnidadeMedida,

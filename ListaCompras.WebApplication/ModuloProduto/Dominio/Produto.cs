@@ -6,7 +6,7 @@ namespace ListaCompras.WebApplication.ModuloProduto.Dominio;
 public class Produto : EntidadeBase<Produto>
 {
     public string Nome { get; set; } = string.Empty;
-    public string UnidadeMedida { get; set; } = string.Empty;
+    public UnidadeMedida UnidadeMedida { get; set; } =  UnidadeMedida.unidade;
     public decimal PrecoAproximado { get; set; } = 0m;
     public Categoria Categoria { get; set; } = null!;
 
@@ -16,7 +16,7 @@ public class Produto : EntidadeBase<Produto>
 
     public Produto(
         string nome,
-        string unidadeMedida,
+        UnidadeMedida unidadeMedida,
         decimal precoAproximado,
         Categoria categoria
     )
@@ -40,11 +40,8 @@ public class Produto : EntidadeBase<Produto>
         if (Categoria == null)
             erros.Add("O campo \"Categoria\" deve ser preenchido.");
 
-        if (string.IsNullOrWhiteSpace(UnidadeMedida))
+        if (!Enum.IsDefined(typeof(UnidadeMedida), UnidadeMedida))
             erros.Add("O campo \"Unidade de Medida\" deve ser preenchido.");
-
-        else if (UnidadeMedida.Length < 2 || UnidadeMedida.Length > 100)
-            erros.Add("O campo \"Unidade de Medida\" deve conter no máximo 20 caracteres.");
 
         if (PrecoAproximado == 0)
             erros.Add("O campo \"Preço Aproximado\" deve ser preenchido.");

@@ -4,7 +4,7 @@ using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 namespace ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 
 public record ListarProdutoDto(
-    string Id,
+    Guid Id,
     string Nome,
     string CategoriaNome,
     string UnidadeMedida,
@@ -19,7 +19,7 @@ public record CadastrarProdutoDto(
 );
 
 public record EditarProdutoDto(
-    string Id,
+    Guid Id,
     string Nome,
     string CategoriaId,
     string UnidadeMedida,
@@ -27,7 +27,7 @@ public record EditarProdutoDto(
 );
 
 public record DetalhesProdutoDto(
-    string Id,
+    Guid Id,
     string Nome,
     string CategoriaId,
     string UnidadeMedida,
