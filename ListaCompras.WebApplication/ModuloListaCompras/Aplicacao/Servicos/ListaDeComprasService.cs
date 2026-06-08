@@ -67,4 +67,20 @@ public class ListaDeComprasService
         // Persistimos a exclusão
         _contexto.Salvar();
     }
+
+    public void Editar(string id, EditarListaComprasDto dto)
+{
+    var listaExistente = _listaRepository.SelecionarPorId(id);
+    if (listaExistente == null) throw new Exception("Lista não encontrada.");
+
+    // Atualiza os dados usando o método que você já tem na Entidade
+    listaExistente.Nome = dto.Nome;
+    // Se precisar atualizar status:
+    // listaExistente.Status = dto.Status;
+
+    _listaRepository.Editar(id, listaExistente);
+    
+    // Salva no arquivo JSON
+    _contexto.Salvar();
+}
 }

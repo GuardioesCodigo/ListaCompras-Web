@@ -50,6 +50,11 @@
                         <td>@lista.DataCriacaoFormatada</td>
                         <td>@lista.Status</td>
                         <td>
+                            
+                            <form action="/ListaCompras/Editar/@lista.Id" method="get" style="display:inline;">
+                                <button type="submit" class="btn-editar">Editar</button>
+                            </form>
+                            
                             <form action="/ListaCompras/Excluir" method="post" style="display:inline;">
                                 <input type="hidden" name="id" value="@lista.Id" />
                                 <button type="submit">Excluir</button>

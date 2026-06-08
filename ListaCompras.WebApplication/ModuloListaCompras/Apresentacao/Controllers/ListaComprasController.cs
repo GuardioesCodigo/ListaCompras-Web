@@ -4,7 +4,6 @@ using ListaCompras.WebApplication.ModuloListaCompras.Servicos;
 using ListaCompras.WebApplication.ModuloListaCompras.Apresentacao;
 using ListaCompras.WebApplication.ModuloListaCompras.Aplicacao;
 
-
 namespace ListaCompras.WebApplication.Apresentacao;
 
 public class ListaComprasController : Controller
@@ -44,7 +43,6 @@ public class ListaComprasController : Controller
     [HttpGet]
     public IActionResult Excluir(string id)
     {
-        // Precisamos buscar para mostrar na tela de confirmação
         var dto = _servico.SelecionarPorId(id);
         if (dto == null) return RedirectToAction(nameof(Listar));
 
@@ -57,5 +55,35 @@ public class ListaComprasController : Controller
     {
         _servico.Excluir(id);
         return RedirectToAction(nameof(Listar));
+    }
+
+    [HttpGet]
+public IActionResult Editar(string id)
+    {
+        var lista = _servico.SelecionarPorId(id);
+        if (lista == null) return NotFound();
+        
+        // Agora passamos o status que veio do serviço
+        var dto = new EditarListaComprasDto(lista.Id, lista.Nome, lista.Status);
+        return View(dto);
+    }
+    
+
+    [HttpPost]
+    public IActionResult Editar(string id, EditarListaComprasDto dto)
+    {
+        if (!ModelState.IsValid) return View(dto);
+
+        try
+        {
+            _servico.Editar(id, dto);
+            // Corrigido para Listar, pois seu método principal chama Listar, não Index
+            return RedirectToAction(nameof(Listar));
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
+            return View(dto);
+        }
     }
 }
