@@ -71,7 +71,7 @@ public class ServicoCategoria
         );
     }
 
-    public Result Excluir(string id)
+    public Result Excluir(Guid id)
     {
         Categoria? categoria = repositorioCategoria.SelecionarPorId(id);
 

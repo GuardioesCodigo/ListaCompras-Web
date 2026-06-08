@@ -1,21 +1,13 @@
 using FluentResults;
-using ListaCompras.ConsoleApp.ModuloCategoria.Infra;
-using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
+using AutoMapper;
 using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ListaCompras.WebApplication.ModuloCategoria.Apresentacao;
 
-public class CategoriaController: Controller
+public class CategoriaController(ServicoCategoria servicoCategoria, IMapper mapeador) : Controller
 {
-    private readonly ServicoCategoria servicoCategoria;
-
-    public CategoriaController(ServicoCategoria servicoCategoria)
-    {
-        this.servicoCategoria = servicoCategoria;
-    }
-
     [HttpGet]
     public ActionResult Listar(string status)
     {
@@ -28,10 +20,9 @@ public class CategoriaController: Controller
             dtos = dtos.Where(c => c.Cor == cor).ToList();
         }
 
-        List<ListarCategoriasViewModel> listarVms = dtos
+        List<ListarCategoriasViewModel> listarVms = mapeador.Map<List<ListarCategoriasViewModel>>(dtos)
             .Select(c => new ListarCategoriasViewModel(c.Id, c.Nome, c.Cor))
-            .ToList();
-            
+            .ToList();        
 
         return View(listarVms);
     }
@@ -39,10 +30,7 @@ public class CategoriaController: Controller
     [HttpGet]
     public ActionResult Cadastrar()
     {
-        CadastrarCategoriasViewModel cadastrarVm = new CadastrarCategoriasViewModel(
-            string.Empty,
-            CorCategoria.Nenhuma
-        );
+        List<CadastrarCategoriasViewModel> cadastrarVm = new List<CadastrarCategoriasViewModel>();     
 
         return View(cadastrarVm);
     }
@@ -53,11 +41,7 @@ public class CategoriaController: Controller
         if (!ModelState.IsValid)
             return View(cadastrarVm);
 
-        CadastrarCategoriaDto dto = new CadastrarCategoriaDto(
-            cadastrarVm.Nome,
-            cadastrarVm.Cor
-        );
-
+        CadastrarCategoriaDto dto = mapeador.Map<CadastrarCategoriaDto>(cadastrarVm);
         Result resultado = servicoCategoria.Cadastrar(dto);
 
         if (resultado.IsFailed)
@@ -92,11 +76,7 @@ public class CategoriaController: Controller
 
         DetalhesCategoriaDto categoria = resultado.Value;
 
-        EditarCategoriasViewModel editarVm = new EditarCategoriasViewModel(
-            id,
-            categoria.Nome,
-            categoria.Cor
-        );
+        List<EditarCategoriasViewModel> editarVm = new List<EditarCategoriasViewModel>();
 
         return View(editarVm);
     }
@@ -107,11 +87,8 @@ public class CategoriaController: Controller
         if (!ModelState.IsValid)
             return View(editarVm);
 
-        Result resultado = servicoCategoria.Editar(new EditarCategoriaDto(
-            editarVm.Id,
-            editarVm.Nome,
-            editarVm.Cor
-        ));
+        EditarCategoriaDto dto = mapeador.Map<EditarCategoriaDto>(editarVm);
+        Result resultado = servicoCategoria.Editar(dto);
 
         if (resultado.IsFailed)
         {
@@ -143,11 +120,7 @@ public class CategoriaController: Controller
 
         DetalhesCategoriaDto dto = resultado.Value;
 
-        ExcluirCategoriasViewModel excluirVm = new ExcluirCategoriasViewModel(
-            id,
-            dto.Nome,
-            dto.Cor
-        );
+        ExcluirCategoriasViewModel excluirVm = mapeador.Map<ExcluirCategoriasViewModel>(resultado.Value);
 
         return View(excluirVm);
     }
