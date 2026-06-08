@@ -5,6 +5,7 @@ using ListaCompras.WebApplication.Compartilhado.Apresentacao.Extensions;
 using ListaCompras.WebApplication.Compartilhado.Dominio;
 using ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 using ListaCompras.WebApplication.ModuloCategoria.Aplicacao;
+using ListaCompras.WebApplication.ModuloCategoria.Apresentacao;
 using ListaCompras.WebApplication.ModuloCategoria.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
@@ -39,13 +40,7 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
     {
         ViewBag.Categoria = CarregarCategorias();
         
-        CadastrarProdutoViewModel cadastrarVm = new CadastrarProdutoViewModel()
-        {
-            Id = string.Empty,
-            Nome = string.Empty,
-            CategoriaId = string.Empty,
-            UnidadeMedida = string.Empty
-        };
+        CadastrarProdutoViewModel cadastrarVm = new CadastrarProdutoViewModel();
 
         return View(cadastrarVm);
     }
@@ -89,9 +84,9 @@ public class ProdutoController(ServicoProduto servicoProduto, ServicoCategoria s
             return RedirectToAction(nameof(Listar));
         }
 
-        DetalhesProdutoDto dto =  resultado.Value;
+        DetalhesProdutoDto produto = resultado.Value;
 
-        EditarProdutoViewModel editarVm = mapeador.Map<EditarProdutoViewModel>(dto);
+        EditarProdutoViewModel editarVm = mapeador.Map<EditarProdutoViewModel>(produto);
 
         ViewBag.Categoria = CarregarCategorias();
 
