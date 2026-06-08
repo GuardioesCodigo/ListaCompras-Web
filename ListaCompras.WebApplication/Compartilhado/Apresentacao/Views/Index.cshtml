@@ -3,30 +3,39 @@
     ViewBag.Titulo = "Home";
 }
 
-<div class="row align-items-center">
+<div class="container py-5">
+    <div class="row align-items-center min-vh-75">
 
-    <div class="col-lg-5">
+        <div class="col-lg-5">
 
-        <h1 class="display-5 fw-semibold mb-3">Lista de Compras</h1>
+            <span class="badge bg-primary mb-3">Organize suas compras</span>
 
-        <p class="lead text-secondary mb-4">Organize suas compras, controle seus produtos e economize com praticidade.</p>
+            <h1 class="display-4 fw-bold mb-3">Lista de Compras</h1>
 
-        <div class="d-flex flex-column gap-2">
-            <a class="btn btn-primary rounded-pill px-4" asp-controller="Categoria" asp-action="Listar">
-                Listar Categoria
-            </a>
+            <p class="lead text-secondary mb-4">
+                Controle seus produtos, organize categorias e economize
+                tempo no gerenciamento das suas compras.
+            </p>
 
-            <a class="btn btn-primary rounded-pill px-4" asp-controller="Produto" asp-action="Listar">
-                Listar Produto
-            </a>
+            <div class="d-flex flex-wrap gap-3">
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="Categoria" asp-action="Listar">
+                    Categorias
+                </a>
+
+                <a class="btn btn-primary btn-lg rounded-pill px-5" asp-controller="Produto" asp-action="Listar">
+                    Produtos
+                </a>
+
+            </div>
+
         </div>
-    </div>
 
-    <div class="col-lg-7 text-end">
-        <img src="~/Img/ImgCapa.png"
-            class="img-fluid"
-            style="max-width:650px"
-            alt="Lista de Compras">
-    </div>
+        <div class="col-lg-7 text-center">
+            <img src="~/Img/ImgCapa.png"
+                class="img-fluid hero-image"
+                alt="Lista de Compras">
+        </div>
 
+    </div>
 </div>
