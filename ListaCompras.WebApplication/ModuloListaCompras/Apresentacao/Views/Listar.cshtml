@@ -16,13 +16,28 @@
 
     <h2>Gerenciador de Listas de Compras</h2>
 
-    @if (TempData["MensagemErro"] != null)
+    @if (TempData["Erro"] != null)
     {
-        <div class="alert-error">@TempData["MensagemErro"]</div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Erro"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
     }
-    @if (TempData["MensagemSucesso"] != null)
+
+    @if (TempData["Sucesso"] != null)
     {
-        <div class="alert-success">@TempData["MensagemSucesso"]</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Sucesso"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
     }
 
     <a href="/ListaCompras/Cadastrar" class="btn btn-primary rounded-pill px-4 shadow-sm">Adicionar Lista</a>
