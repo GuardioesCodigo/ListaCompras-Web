@@ -60,20 +60,19 @@ public class ListaDeComprasService
         );
     }
 
-    public void Excluir(string id)
-    {
-        var lista = _listaRepository.SelecionarPorId(id);
-        if (lista == null) throw new Exception("Lista não encontrada.");
-        
-        if (lista.Itens.Count > 0)
-            throw new Exception("Regra de Negócio: Não é possível excluir uma lista que possui itens vinculados.");
+public void Excluir(string id)
+{
+    var lista = _listaRepository.SelecionarPorId(id);
+    if (lista == null) 
+        throw new Exception("Lista não encontrada.");
+    
+    // Regra de negócio: impede a exclusão se houver itens
+    if (lista.Itens.Count > 0)
+        throw new Exception("Regra de Negócio: Não é possível excluir uma lista que possui itens vinculados.");
 
-        _listaRepository.Excluir(id);
-        
-        // Persistimos a exclusão
-        _contexto.Salvar();
-    }
-
+    _listaRepository.Excluir(id);
+    _contexto.Salvar();
+}
     public void Editar(string id, EditarListaComprasDto dto)
 {
     var listaExistente = _listaRepository.SelecionarPorId(id);

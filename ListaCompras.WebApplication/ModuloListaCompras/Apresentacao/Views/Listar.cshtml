@@ -4,6 +4,7 @@
 }
 
 @using ListaCompras.WebApplication.ModuloListaCompras.Apresentacao;
+@using ListaCompras.WebApplication.ModuloItensLista;
 @model IEnumerable<ListaComprasViewModel>
 
 <!DOCTYPE html>
@@ -15,14 +16,20 @@
 <body>
 
     <h2>Gerenciador de Listas de Compras</h2>
-
     @if (TempData["MensagemErro"] != null)
     {
-        <div class="alert-error">@TempData["MensagemErro"]</div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     }
+
     @if (TempData["MensagemSucesso"] != null)
     {
-        <div class="alert-success">@TempData["MensagemSucesso"]</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     }
 
     <a href="/ListaCompras/Cadastrar" class="btn btn-primary rounded-pill px-4 shadow-sm">Adicionar Lista</a>
@@ -57,7 +64,7 @@
                                         <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Editar</button>
                                     </form>
                                     
-                                    <form action="/ListaCompras/Excluir" method="post"  style="display:inline;">
+                                    <form action="/ListaCompras/Excluir" method="post"  style="display:inline;" >
                                         <input type="hidden" name="id" value="@lista.Id" />
                                         <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Excluir</button>
                                     </form>

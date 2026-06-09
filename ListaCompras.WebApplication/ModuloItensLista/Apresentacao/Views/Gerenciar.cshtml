@@ -102,7 +102,7 @@
                                 <td class="fw-bold text-primary">R$ @((item.Quantidade * item.PrecoUnitario).ToString("N2"))</td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <form action="/ItensLista/Remover" method="post" onsubmit="return confirm('Remover este item?')">
+                                        <form action="/ItensLista/Remover" method="post">
                                             <input type="hidden" name="listaId" value="@lista?.Id" />
                                             <input type="hidden" name="itemId" value="@item.Id" />
                                             <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">Remover</button>
