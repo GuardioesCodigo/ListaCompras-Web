@@ -6,6 +6,7 @@ using ListaCompras.WebApplication.ModuloItensLista; // Garante o import do ItemL
 
 namespace ListaCompras.WebApplication.ModuloItensLista.Apresentacao.Controllers;
 
+[Route("ItensLista/[action]")]
 public class ItensListaController : Controller
 {
     private readonly ItemListaComprasService _itemService;
@@ -22,7 +23,15 @@ public class ItensListaController : Controller
     public IActionResult Gerenciar(string listaId)
     {
         var listaDto = _listaService.SelecionarPorId(listaId);
-        if (listaDto == null) return NotFound();
+        var debugListas = _listaService.SelecionarTodos(); 
+    
+    
+        if (listaDto == null) 
+        {
+        
+            return NotFound(); 
+        }
+
 
         ViewBag.Lista = listaDto;
         ViewBag.Itens = _itemService.ObterItensDaLista(listaId);
@@ -31,7 +40,7 @@ public class ItensListaController : Controller
         var model = new ItemListaFormViewModel { ListaComprasId = listaId };
         
         // CORREÇÃO: Apontando o caminho físico exato da sua View customizada
-        return View("~/ModuloItensLista/Apresentacao/Views/Gerenciar.cshtml", model);
+        return View("Gerenciar", model);
     }
 
     [HttpPost]

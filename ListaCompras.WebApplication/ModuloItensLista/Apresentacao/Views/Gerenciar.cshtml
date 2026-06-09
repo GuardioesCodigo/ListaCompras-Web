@@ -13,7 +13,7 @@
     ViewBag.Titulo = $"Gerenciando: {lista?.Nome ?? "Lista de Compras"}";
 }
 
-<div class="container mt-5">
+<div class="container mt-5"">
     
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -23,7 +23,7 @@
                 Status: <span class="fw-semibold text-success">@lista?.Status</span>
             </p>
         </div>
-        <div class="card border-0 shadow-sm rounded-4 px-4 py-3 bg-primary text-white text-end">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
             <small class="text-uppercase tracking-wider opacity-75">Total da Lista</small>
             <h3 class="fw-bold m-0">R$ @(lista?.TotalGasto.ToString("N2") ?? "0,00")</h3>
         </div>
@@ -38,7 +38,7 @@
         <div class="alert alert-danger border-0 shadow-sm rounded-3 mb-3">@TempData["MensagemErro"]</div>
     }
 
-    <div class="card border-0 shadow-sm rounded-4 p-4 mb-5">
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <h5 class="fw-bold text-primary mb-3">Adicionar Item à Lista</h5>
         <form action="/ItensLista/Adicionar" method="post">
             <input type="hidden" asp-for="ListaComprasId" />

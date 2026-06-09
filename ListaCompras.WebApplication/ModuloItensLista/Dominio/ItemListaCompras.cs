@@ -1,34 +1,44 @@
-using System.Text.Json.Serialization;
-using ListaCompras.WebApplication.ModuloProduto.Dominio;
-using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
+using ListaCompras.WebApplication.Compartilhado;
 
-namespace ListaCompras.WebApplication.ModuloListaCompras.Dominio;
-
-public class ItemListaCompras
+public class ItemListaCompras : EntidadeBase<ItemListaCompras>
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    
-    public Produto Produto { get; set; } = new();
-    
+    public string ProdutoId { get; set; }
+    public string NomeProduto { get; set; }
+    public string CategoriaProduto { get; set; }
     public int Quantidade { get; set; }
-    
     public decimal Preco { get; set; }
 
-    // O [JsonIgnore] é o que impede o loop infinito de serialização (Stack Overflow)
-    // Ele diz ao sistema para ignorar esta propriedade ao ler/salvar no JSON
-    [JsonIgnore]
-    public ListaDeCompras? Lista { get; set; }
+    public ItemListaCompras() { }
 
-    // Construtor vazio necessário para a desserialização do JSON
-    public ItemListaCompras()
+    public ItemListaCompras(string produtoId, string nomeProduto, string categoriaNome, int quantidade, decimal preco)
     {
-    }
-
-    // Construtor principal para criar o item associado ao produto
-    public ItemListaCompras(Produto produto, int quantidade,decimal preco)
-    {
-        Produto = produto;
+        ProdutoId = produtoId;
+        NomeProduto = nomeProduto;
+        CategoriaProduto = categoriaNome;
         Quantidade = quantidade;
         Preco = preco;
+    }
+
+    // --- Implementação obrigatória da EntidadeBase ---
+
+    public override void AtualizarDados(ItemListaCompras entidadeAtualizada)
+    {
+        NomeProduto = entidadeAtualizada.NomeProduto;
+        CategoriaProduto = entidadeAtualizada.CategoriaProduto;
+        Quantidade = entidadeAtualizada.Quantidade;
+        Preco = entidadeAtualizada.Preco;
+    }
+
+    public override List<string> Validar()
+    {
+        var erros = new List<string>();
+
+        if (Quantidade <= 0)
+            erros.Add("A quantidade deve ser maior que zero.");
+        
+        if (string.IsNullOrWhiteSpace(NomeProduto))
+            erros.Add("O nome do produto é obrigatório.");
+
+        return erros;
     }
 }

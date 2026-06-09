@@ -10,7 +10,8 @@ public class RepositorioCategoriaEmArquivo : RepositorioBaseEmArquivo<Categoria>
     {
     }
 
-    protected override List<Categoria> CarregarRegistros()
+    // Apenas este método deve existir aqui
+    protected override List<Categoria> ObterListaDoContexto()
     {
         return contexto.Categorias;
     }

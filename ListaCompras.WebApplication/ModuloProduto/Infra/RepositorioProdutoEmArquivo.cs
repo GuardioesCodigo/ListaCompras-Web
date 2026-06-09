@@ -5,13 +5,13 @@ using ListaCompras.WebApplication.ModuloProduto.Dominio;
 
 namespace ListaCompras.WebApplication.ModuloProduto.Infra;
 
-public class RepositorioProdutoEmArquivo : RepositorioBaseEmArquivo<Produto>, IRepositorio<Produto>
+public class RepositorioProdutoEmArquivo : RepositorioBaseEmArquivo<Produto>, IRepositorio<Produto>,IRepositorioProduto
 {
     public RepositorioProdutoEmArquivo(ContextoJson contexto) : base(contexto)
     {
     }
 
-    protected override List<Produto> CarregarRegistros()
+    protected override List<Produto> ObterListaDoContexto()
     {
         return contexto.Produtos;
     }

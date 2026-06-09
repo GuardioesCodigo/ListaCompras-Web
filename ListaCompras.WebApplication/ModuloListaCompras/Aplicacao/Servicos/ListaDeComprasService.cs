@@ -22,7 +22,6 @@ public class ListaDeComprasService
         _repositorioProduto = repositorioProduto; // Inicializado
         _contexto = contexto;
         
-        _contexto.Carregar();
     }
 
     public void Criar(CadastrarListaComprasDto dto)

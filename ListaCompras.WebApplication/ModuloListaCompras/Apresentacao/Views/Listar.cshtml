@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = null;
+    Layout = "_layout";
 }
 
 @using ListaCompras.WebApplication.ModuloListaCompras.Apresentacao;
@@ -25,7 +25,7 @@
         <div class="alert-success">@TempData["MensagemSucesso"]</div>
     }
 
-    <a href="/ListaCompras/Cadastrar" class="btn">Nova Lista</a>
+    <a href="/ListaCompras/Cadastrar" class="btn btn-primary rounded-pill px-4 shadow-sm">Adicionar Lista</a>
 
     @if (Model == null || !Model.Any())
     {
@@ -33,38 +33,45 @@
     }
     else
     {
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome da Lista</th>
-                    <th>Data de Criação</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var lista in Model)
-                {
-                    <tr>
-                        <td><strong>@lista.Nome</strong></td>
-                        <td>@lista.DataCriacaoFormatada</td>
-                        <td>@lista.Status</td>
-                        <td>
-                            
-                            <form action="/ListaCompras/Editar/@lista.Id" method="get" style="display:inline;">
-                                <button type="submit" class="btn-editar">Editar</button>
-                            </form>
-                            
-                            <form action="/ListaCompras/Excluir" method="post" style="display:inline;">
-                                <input type="hidden" name="id" value="@lista.Id" />
-                                <button type="submit">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 tabela-custom">
+                    <thead>
+                        <tr>
+                            <th>Nome da Lista</th>
+                            <th>Data de Criação</th>
+                            <th>Status</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lista in Model)
+                        {
+                            <tr>
+                                <td><strong>@lista.Nome</strong></td>
+                                <td>@lista.DataCriacaoFormatada</td>
+                                <td>@lista.Status</td>
+                                <td>
+                                    
+                                    <form action="/ListaCompras/Editar/@lista.Id" method="get" style="display:inline;">
+                                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Editar</button>
+                                    </form>
+                                    
+                                    <form action="/ListaCompras/Excluir" method="post"  style="display:inline;">
+                                        <input type="hidden" name="id" value="@lista.Id" />
+                                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Excluir</button>
+                                    </form>
+                                    <form action="/ItensLista/Gerenciar/?listaId=@lista.Id" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" value="@lista.Id" />
+                                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Adicionar Item</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     }
-
 </body>
 </html>

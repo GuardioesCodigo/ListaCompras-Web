@@ -16,29 +16,37 @@ namespace ListaCompras.WebApp.Compartilhado.Aplicacao;
 public static class InjecaoDependencia
 {
     public static void AddAplicationServices(this IServiceCollection services)
-    {
-        services.AddScoped<ServicoCategoria>();
-        services.AddScoped<ServicoProduto>();
+{
+    services.AddScoped<ServicoCategoria>();
+    services.AddScoped<ServicoProduto>();
 
-        services.AddScoped<IRepositorio<Categoria>, RepositorioCategoriaEmArquivo>();
-        services.AddScoped<IRepositorio<Produto>, RepositorioProdutoEmArquivo>();
-        // No seu arquivo InjecaoDependencia.cs, substitua as duas linhas problemáticas por esta:
-        services.AddScoped<IListaDeComprasRepository, RepositorioListaComprasEmArquivo>();
-        services.AddScoped<ListaDeComprasService>();
-        services.AddScoped<ItemListaComprasService>();
-    }
+    // 1. Registre a classe concreta
+    services.AddScoped<RepositorioProdutoEmArquivo>();
 
+    // 2. Registre as interfaces apontando para a mesma instância da classe concreta
+    services.AddScoped<IRepositorio<Produto>>(provider => provider.GetRequiredService<RepositorioProdutoEmArquivo>());
+    services.AddScoped<IRepositorioProduto>(provider => provider.GetRequiredService<RepositorioProdutoEmArquivo>());
+
+    services.AddScoped<IRepositorio<Categoria>, RepositorioCategoriaEmArquivo>();
+    services.AddScoped<IListaDeComprasRepository, RepositorioListaComprasEmArquivo>();
+    
+    services.AddScoped<ListaDeComprasService>();
+    services.AddScoped<ItemListaComprasService>();
+}
     public static void AddInfraRepositories(this IServiceCollection services)
     {
-        services.AddScoped(provider =>
+       services.AddSingleton<ContextoJson>(provider =>
         {
             ContextoJson contextoJson = new ContextoJson();
-
-            contextoJson.Carregar();
-
+            try 
+            {
+                contextoJson.Carregar();
+            }
+            catch { /* Ignora erro se arquivo não existir */ }
             return contextoJson;
-        });
+         });
     }
+
 
     public static void AddPresentation(this IServiceCollection services)
     {

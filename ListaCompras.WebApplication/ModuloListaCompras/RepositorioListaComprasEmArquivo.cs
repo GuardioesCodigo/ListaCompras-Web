@@ -12,8 +12,9 @@ public class RepositorioListaComprasEmArquivo :
     {
     }
 
-    protected override List<ListaDeCompras> CarregarRegistros()
+    protected override List<ListaDeCompras> ObterListaDoContexto()
     {
         return contexto.ListaCompras;
     }
+
 }

@@ -5,6 +5,8 @@ using ListaCompras.WebApplication.ModuloListaCompras;
 using ListaCompras.WebApplication.ModuloProduto;
 using ListaCompras.WebApplication.ModuloListaCompras.Dominio;
 using ListaCompras.WebApplication.ModuloProduto.Dominio;
+using ListaCompras.WebApplication.ModuloItensLista.Apresentacao.Controllers;
+
 
 namespace ListaCompras.WebApplication.Compartilhado.Infra.Arquivos;
 
@@ -14,6 +16,7 @@ public class ContextoJson
     public List<Categoria> Categorias { get; set; } = new List<Categoria>();
     public List<Produto> Produtos { get; set; } = new List<Produto>();
     public List<ListaDeCompras> ListaCompras {get; set;} = new List<ListaDeCompras>();
+    public List<ItemListaCompras> ItemListaCompras {get; set;} = new List<ItemListaCompras>();
     private readonly string caminhoArquivo;
 
     public ContextoJson()
@@ -65,7 +68,8 @@ public class ContextoJson
 
         Produtos = contextoSalvo.Produtos;
         Categorias = contextoSalvo.Categorias;
-        ListaCompras = contextoSalvo.ListaCompras; 
+        ListaCompras = contextoSalvo.ListaCompras;
+        ItemListaCompras = contextoSalvo.ItemListaCompras;
     }
 }
 

@@ -6,28 +6,29 @@ namespace ListaCompras.WebApplication.Compartilhado.Arquivos;
 public abstract class RepositorioBaseEmArquivo<T> : IRepositorio<T> where T : EntidadeBase<T>
 {
     protected ContextoJson contexto;
-    protected List<T> registros;
 
     public RepositorioBaseEmArquivo(ContextoJson contexto)
     {
         this.contexto = contexto;
-        this.registros = CarregarRegistros();
     }
 
-    protected abstract List<T> CarregarRegistros();
+    // Agora o acesso é centralizado e direto no contexto
+    protected abstract List<T> ObterListaDoContexto();
 
     public void Cadastrar(T entidade)
     {
-        registros.Add(entidade);
-        contexto.Salvar(); // Sugestão: Salvar aqui garante a persistência
+        ObterListaDoContexto().Add(entidade);
+        contexto.Salvar();
     }
 
     public virtual bool Editar(string id, T entidadeAtualizada)
     {
-        var entidade = SelecionarPorId(id);
+        var lista = ObterListaDoContexto();
+        var entidade = lista.FirstOrDefault(r => r.Id == id);
+        
         if (entidade == null) return false;
 
-        var lista = CarregarRegistros();
+        // Atualiza a posição exata na lista do contexto
         int index = lista.IndexOf(entidade);
         lista[index] = entidadeAtualizada;
         
@@ -37,28 +38,19 @@ public abstract class RepositorioBaseEmArquivo<T> : IRepositorio<T> where T : En
 
     public virtual bool Excluir(string id)
     {
-        var entidade = SelecionarPorId(id);
+        var lista = ObterListaDoContexto();
+        var entidade = lista.FirstOrDefault(r => r.Id == id);
+        
         if (entidade == null) return false;
 
-        var lista = CarregarRegistros();
         lista.Remove(entidade);
-        
         contexto.Salvar();
         return true;
     }
 
-    public T? SelecionarPorId(string idSelecionado)
-    {
-        return registros.FirstOrDefault(r => r.Id == idSelecionado);
-    }
+    public T? SelecionarPorId(string id) => ObterListaDoContexto().FirstOrDefault(r => r.Id == id);
 
-    public List<T> SelecionarTodos()
-    {
-        return registros;
-    }
+    public List<T> SelecionarTodos() => ObterListaDoContexto();
 
-    public List<T> Filtrar(Predicate<T> filtro)
-    {
-        return registros.FindAll(filtro);
-    }
+    public List<T> Filtrar(Predicate<T> filtro) => ObterListaDoContexto().FindAll(filtro);
 }

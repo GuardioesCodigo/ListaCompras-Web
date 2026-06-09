@@ -24,9 +24,9 @@ public class ItemListaComprasService
         // Refatorado para usar o construtor do record
         return lista.Itens.Select(i => new ItemListaComprasDto(
             i.Id,
-            i.Produto.Id,
-            i.Produto.Nome,
-            i.Produto.Categoria?.Nome ?? "Sem Categoria",
+            i.ProdutoId,
+            i.NomeProduto,
+            i.CategoriaProduto,
             i.Quantidade,
             i.Preco
         )).ToList();

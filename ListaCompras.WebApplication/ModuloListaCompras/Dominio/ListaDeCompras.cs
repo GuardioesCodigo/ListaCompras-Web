@@ -43,14 +43,22 @@ public class ListaDeCompras : EntidadeBase<ListaDeCompras>
     public void Abrir() => Status = StatusListaCompras.Aberta;
     public void Concluir() => Status = StatusListaCompras.Concluida;
 
-    public void AdicionarItem(Produto produto, int quantidade, decimal preco)
-    {
-        if (Itens.Any(i => i.Produto.Id == produto.Id))
-            throw new Exception("Este produto já foi adicionado a esta lista de compras.");
+   public void AdicionarItem(Produto produto, int quantidade, decimal preco)
+{
+    if (Itens.Any(i => i.ProdutoId == produto.Id))
+        throw new Exception("Este produto já foi adicionado a esta lista de compras.");
 
-        Itens.Add(new ItemListaCompras(produto, quantidade, preco));
-    }
+    // Ajuste aqui: Passando os dados individuais que o construtor do ItemListaCompras espera
+    var novoItem = new ItemListaCompras(
+        produto.Id, 
+        produto.Nome, 
+        produto.Categoria?.Nome ?? "Sem Categoria", 
+        quantidade, 
+        preco
+    );
 
+    Itens.Add(novoItem);
+}
     public bool RemoverItem(string idItem)
     {
         var item = Itens.FirstOrDefault(i => i.Id == idItem);
