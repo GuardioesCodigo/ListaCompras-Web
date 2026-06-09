@@ -6,13 +6,15 @@ O sistema foi desenvolvido com foco na praticidade, organização e integridade 
 
 Desenvolvido por **Iago** e **Dayuã** durante o curso Fullstack da [Academia do Programador](https://www.academiadoprogramador.net) 2026.
 
-![alt text](ImgIndex.png)
+![alt text](Img/ImgIndex.png)
 
 ## 1. Página Inicial
 
 A página inicial funciona como ponto central da aplicação, oferecendo acesso rápido aos módulos do sistema e apresentando uma interface moderna e intuitiva para navegação.
 
 ## 2. Categorias
+
+![alt text](Img/ImgCategorias.png)
 
 O módulo de categorias permite organizar os produtos de acordo com seu tipo, tornando as listas de compras mais estruturadas e fáceis de consultar.
 
@@ -25,6 +27,8 @@ O módulo de categorias permite organizar os produtos de acordo com seu tipo, to
 * Personalização por cor para melhor identificação
 
 ## 3. Produtos
+
+![alt text](Img/ImgProdutos.png)
 
 O módulo de produtos concentra todos os itens que poderão ser utilizados nas listas de compras. Cada produto é associado a uma categoria e possui informações importantes para auxiliar no planejamento das compras.
 
@@ -39,6 +43,7 @@ O módulo de produtos concentra todos os itens que poderão ser utilizados nas l
 
 ## 4. Listas de Compras
 
+![alt text](Img/ImgListaCompras.png)
 
 Este módulo permite criar listas de compras para diferentes ocasiões, auxiliando no planejamento dos itens necessários e no controle dos gastos estimados.
 
@@ -52,6 +57,8 @@ Este módulo permite criar listas de compras para diferentes ocasiões, auxilian
 * Edição e exclusão de listas
 
 ## 5. Itens da Lista
+
+![alt text](Img/ImgItensLista.png)
 
 Os itens da lista representam os produtos adicionados a cada lista de compras, permitindo acompanhar quantidades e valores de forma organizada.
 
