@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="ModuloCategoria\Apresentacao\" />
     <Folder Include="ModuloCategoria\Apresentacao\Views\" />
+    <Folder Include="ModuloItensLista\Apresentacao\Views\" />
     <Folder Include="ModuloItensLista\Infra\" />
     <Folder Include="ModuloProduto\Aplicacao\" />
     <Folder Include="ModuloProduto\Apresentacao\Views\" />

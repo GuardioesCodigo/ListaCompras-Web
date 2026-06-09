@@ -57,11 +57,12 @@ public class ListaComprasController : Controller
         try
         {
             _servico.Excluir(id); 
+            TempData["MensagemSucesso"] = "Lista excluída com sucesso!";
             return RedirectToAction("Listar");
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            TempData["Erro"] = ex.Message;
+            TempData["Erro"] ="Não foi possivel Excluir";
             return RedirectToAction("Listar");
         }
     }
