@@ -14,8 +14,15 @@
     <title>Minhas Listas de Compras</title>
 </head>
 <body>
+<div class="container mt-5">
 
-    <h2>Gerenciador de Listas de Compras</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary m-0">Gerenciador de Listas de Compras</h2>
+
+        <a class="btn btn-primary rounded-pill px-4 shadow-sm" asp-action="Cadastrar">
+            <i class="bi bi-plus-lg me-2"></i>Nova Lista
+        </a>
+    </div>
 
     @if (TempData["Erro"] != null)
     {
@@ -40,8 +47,6 @@
             </button>
         </div>
     }
-
-    <a href="/ListaCompras/Cadastrar" class="btn btn-primary rounded-pill px-4 shadow-sm">Adicionar Lista</a>
 
     @if (Model == null || !Model.Any())
     {
@@ -69,18 +74,22 @@
                                 <td>@lista.Status</td>
                                 <td>
                                     
-                                    <form action="/ListaCompras/Editar/@lista.Id" method="get" style="display:inline;">
-                                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Editar</button>
-                                    </form>
-                                    
-                                    <form action="/ListaCompras/Excluir" method="post"  style="display:inline;" >
-                                        <input type="hidden" name="id" value="@lista.Id" />
-                                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Excluir</button>
-                                    </form>
-                                    <form action="/ItensLista/Gerenciar/?listaId=@lista.Id" method="post" style="display:inline;">
-                                        <input type="hidden" name="id" value="@lista.Id" />
-                                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Adicionar Item</button>
-                                    </form>
+                                    <div class="d-flex justify-content-center gap-2">
+
+                                        <form action="/ListaCompras/Editar/@lista.Id" method="get" style="display:inline;">
+                                            <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Editar</button>
+                                        </form>
+                                        
+                                        <form action="/ListaCompras/Excluir" method="post"  style="display:inline;" >
+                                            <input type="hidden" name="id" value="@lista.Id" />
+                                            <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Excluir</button>
+                                        </form>
+                                        <form action="/ItensLista/Gerenciar/?listaId=@lista.Id" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@lista.Id" />
+                                            <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="submit">Adicionar Item</button>
+                                        </form>
+
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -89,5 +98,6 @@
             </div>
         </div>
     }
+</div>
 </body>
 </html>
