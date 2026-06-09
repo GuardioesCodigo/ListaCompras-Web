@@ -16,19 +16,28 @@
 <body>
 
     <h2>Gerenciador de Listas de Compras</h2>
-    @if (TempData["MensagemErro"] != null)
+
+    @if (TempData["Erro"] != null)
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            @TempData["MensagemErro"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            @TempData["Erro"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
         </div>
     }
 
-    @if (TempData["MensagemSucesso"] != null)
+    @if (TempData["Sucesso"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            @TempData["MensagemSucesso"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            @TempData["Sucesso"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
         </div>
     }
 

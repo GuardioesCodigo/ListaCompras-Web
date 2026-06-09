@@ -29,14 +29,30 @@
         </div>
     </div>
 
-    @if (TempData["MensagemSucesso"] != null)
+    @if (TempData["Erro"] != null)
     {
-        <div class="alert alert-success border-0 shadow-sm rounded-3 mb-3">@TempData["MensagemSucesso"]</div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Erro"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
     }
-    @if (TempData["MensagemErro"] != null)
+
+    @if (TempData["Sucesso"] != null)
     {
-        <div class="alert alert-danger border-0 shadow-sm rounded-3 mb-3">@TempData["MensagemErro"]</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Sucesso"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+        </div>
     }
+
 
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <h5 class="fw-bold text-primary mb-3">Adicionar Item à Lista</h5>
